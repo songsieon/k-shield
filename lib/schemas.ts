@@ -65,6 +65,13 @@ export const integrityAiSchema = z.object({
 
 export type IntegrityAiAnswer = z.infer<typeof integrityAiSchema>;
 
+/** "문제없음" 결과를 한 번 더 검토한 답 */
+export const integrityReviewAiSchema = z.object({
+  keep: z.boolean(),
+  verdict: z.enum(["위반 가능성 있음", "위반 소지 높음", "확인 필요"]).nullable(),
+  reason: z.string(),
+});
+
 // ── 사업 리스크 콕! ──────────────────────────────────
 
 export const businessRiskRequestSchema = z.object({

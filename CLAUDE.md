@@ -31,7 +31,7 @@
 | 언어 | TypeScript (strict), 경로 별칭 `@/*` → 프로젝트 루트 |
 | 린트 | ESLint 9 flat config (`eslint-config-next` core-web-vitals + typescript) |
 | 배포 | Vercel (환경 변수는 Vercel 설정에 따로 등록) |
-| AI 서비스 | OpenAI (`openai` 공식 SDK). 키는 `.env`의 `OPENAI_API_KEY`, 모델은 `OPENAI_MODEL` (기본값 `gpt-5.5`, `lib/ai.ts`) |
+| AI 서비스 | OpenAI (`openai` 공식 SDK). 키는 `.env`의 `OPENAI_API_KEY`, 모델은 `OPENAI_MODEL` (기본값 `gpt-5.5`), 추론 강도는 `OPENAI_REASONING` (기본값 `medium`) — `lib/ai.ts` |
 | 추가 도구 | `zod`(AI 답 모양 검사), `server-only`(키를 읽는 모듈 보호) — 설계는 [DESIGN.md](DESIGN.md) |
 
 ## 2. Next.js 16 작업 규칙
@@ -98,6 +98,7 @@ PRD.md                  # 기획서 (기준 문서)
 - 추가 질문은 한 번에 1개, **최대 10개**. 10개를 넘으면 "확인 필요"로 결과를 낸다.
 - 청탁금지법 사안은 예외사유(제8조 제3항) 요건을 "충족 / 불충족 / 확인 필요"로 먼저 따지고, 가액은 기준 금액과 숫자로 비교하며 같은 사람에게 받은 것은 합산한다.
 - 결과는 **4단계**: 문제없음 / 위반 가능성 있음 / 위반 소지 높음 / 확인 필요.
+- "문제없음"은 서버가 한 번 더 검토한다(재검토 AI 호출). 금액이 기준을 넘거나 예외 요건이 하나라도 충족되지 않으면 서버가 "문제없음"을 낮춘다.
 - 근거는 1~3개, 조문 번호와 함께. 후속 조치는 법령 조치·사내 절차·시스템 경로를 함께 안내한다.
 
 ### 사업 리스크 콕!

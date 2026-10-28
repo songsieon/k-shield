@@ -3,11 +3,16 @@ import "server-only";
 
 import { askStructured } from "./ai";
 import { MAX_QUESTIONS, MESSAGES } from "./messages";
-import { buildIntegrityInput, INTEGRITY_INSTRUCTIONS } from "./prompts/integrity";
-import { integrityAiSchema, type IntegrityAiAnswer, type IntegrityRequest } from "./schemas";
+import {
+  buildIntegrityInput,
+  buildIntegrityReviewInput,
+  INTEGRITY_INSTRUCTIONS,
+  INTEGRITY_REVIEW_INSTRUCTIONS,
+} from "./prompts/integrity";
+import { integrityAiSchema, integrityReviewAiSchema, type IntegrityAiAnswer, type IntegrityRequest } from "./schemas";
 import { resolveRefs, searchEvidence } from "./search";
 import { INTEGRITY_ALWAYS, pickTopics } from "./topics";
-import type { FollowUpAction, IntegrityResponse, IntegrityResult } from "./types";
+import type { Evidence, FollowUpAction, IntegrityResponse, IntegrityResult } from "./types";
 import { verifyRefs } from "./verify";
 
 /** 신고·시스템 경로 안내 자료 (시스템 경로는 이 자료가 근거로 남았을 때만 보여 준다) */
@@ -57,7 +62,35 @@ export async function runIntegrity({ situation, turns }: IntegrityRequest): Prom
     return { kind: "question", question: answer.question.trim(), asked: turns.length + 1, max: MAX_QUESTIONS };
   }
 
-  return { kind: "result", result: checkResult(answer, allowed) };
+  const result = checkResult(answer, allowed);
+  if (result.verdict === "문제없음") await reviewNoProblem(result, { situation, turns, official });
+  return { kind: "result", result };
+}
+
+/**
+ * Plan SC 6(위험한 오판 0건): "문제없음"은 한 번 더 검토한다.
+ * 금지·신고 대상에 해당할 여지가 있다고 보면 결과를 낮추고 이유를 요약과 확인할 것에 남긴다.
+ */
+async function reviewNoProblem(
+  result: IntegrityResult,
+  { situation, turns, official }: { situation: string; turns: IntegrityRequest["turns"]; official: Evidence[] }
+): Promise<void> {
+  try {
+    const review = await askStructured({
+      instructions: INTEGRITY_REVIEW_INSTRUCTIONS,
+      input: buildIntegrityReviewInput({ situation, turns, summary: result.summary, evidence: official }),
+      schema: integrityReviewAiSchema,
+      name: "integrity_review",
+    });
+    if (review.keep) return;
+    result.verdict = review.verdict ?? "확인 필요";
+    result.summary = limitSentences(review.reason, 5);
+    result.toCheck.unshift("다시 검토한 결과 위 이유로 문제없다고 단정할 수 없습니다. 청렴·윤리 담당 부서에 확인하세요");
+  } catch {
+    // 재검토를 못 했으면 단정하지 않는다
+    result.verdict = "확인 필요";
+    result.toCheck.unshift("결과를 다시 검토하지 못했습니다. 청렴·윤리 담당 부서에 확인하세요");
+  }
 }
 
 /** Plan SC 2·3: AI 결과를 점검해 형식이 어긋나거나 근거가 없으면 낮춘다. */
@@ -94,9 +127,14 @@ function checkResult(answer: IntegrityAiAnswer, allowed: string[]): IntegrityRes
   const requirements = ai.exception?.requirements.filter((r) => r.item.trim()) ?? [];
   const amounts = ai.amounts.filter((a) => Number.isFinite(a.given) && Number.isFinite(a.limit) && a.given > 0 && a.limit > 0);
 
-  // 예외 요건이 하나라도 충족되지 않았는데 "문제없음"이면 단정하지 않고 "확인 필요"로 낮춘다
+  // Plan SC 6(위험한 오판 0건): AI가 "문제없음"이라고 해도 서버가 아래 경우에는 낮춘다
   let verdict = ai.verdict;
-  if (verdict === "문제없음" && requirements.some((r) => r.status !== "충족")) {
+  if (verdict === "문제없음" && amounts.some((a) => a.given > a.limit)) {
+    // 받은(받을) 금액이 기준을 넘으면 문제없음이 될 수 없다
+    verdict = "위반 가능성 있음";
+    toCheck.push("받은(받을) 금액이 기준을 넘습니다. 초과분은 받지 않거나 반환하고 신고 여부를 확인하세요");
+  } else if (verdict === "문제없음" && requirements.some((r) => r.status !== "충족")) {
+    // 예외 요건이 하나라도 충족되지 않았으면 단정하지 않는다
     verdict = "확인 필요";
     if (!toCheck.length) toCheck.push("예외사유의 요건 중 확인되지 않은 것이 있습니다. 청렴·윤리 담당 부서에 확인하세요");
   }

@@ -95,6 +95,8 @@ for (const item of questions.integrity) {
     turns: run.turns,
     verdict: result?.verdict ?? run.json?.kind ?? run.error,
     verdictOk: result ? (item.expectedVerdict ?? []).includes(result.verdict) : false,
+    // 위험한 오판: 정답표가 '문제없음'을 허용하지 않는데 앱이 '문제없음'이라고 한 경우
+    dangerous: result?.verdict === "문제없음" && !(item.expectedVerdict ?? []).includes("문제없음"),
     refs,
   });
   process.stdout.write(".");
@@ -118,6 +120,7 @@ for (const item of questions.businessRisk) {
     turns: run.turns,
     verdict: report ? `쟁점 ${issues.length}개` : run.json?.kind ?? run.error,
     verdictOk: true,
+    dangerous: false,
     refs,
   });
   process.stdout.write(".");
@@ -153,7 +156,7 @@ const t2 = timeRate("사업 리스크 콕!");
 console.log("\n\n문항별 결과");
 for (const r of rows) {
   console.log(
-    `${r.ok ? "✅" : "❌"} ${r.id} ${r.title} | ${r.verdict}${r.feature === "청렴 콕!" ? (r.verdictOk ? "" : " (예상 단계와 다름)") : ""} | 질문 ${r.turns}개 | ${r.sec.toFixed(1)}초`
+    `${r.ok && !r.dangerous ? "✅" : "❌"} ${r.id} ${r.title} | ${r.verdict}${r.dangerous ? " ⚠️ 위험한 오판" : r.feature === "청렴 콕!" && !r.verdictOk ? " (예상 단계와 다름)" : ""} | 질문 ${r.turns}개 | ${r.sec.toFixed(1)}초`
   );
   if (!r.ok) console.log(`   근거: ${r.refs.join(" | ") || "(없음)"}`);
 }
@@ -164,6 +167,8 @@ console.log(`2. 근거 표시율      ${pct(shown, total)} (${shown}/${total}) �
 console.log(`3. 지어낸 조문      ${fakes.length}건 — 목표 0건 ${fakes.length === 0 ? "✅" : "❌"}`);
 if (t1.d) console.log(`4. 청렴 콕! 30초 이내   ${pct(t1.n, t1.d)} (최대 ${t1.max.toFixed(1)}초) — 목표 90% 이상 ${t1.n / t1.d >= 0.9 ? "✅" : "❌"}`);
 if (t2.d) console.log(`5. 사업 리스크 콕! 3분 이내 ${pct(t2.n, t2.d)} (최대 ${t2.max.toFixed(1)}초) — 목표 90% 이상 ${t2.n / t2.d >= 0.9 ? "✅" : "❌"}`);
+const dangerous = rows.filter((r) => r.dangerous);
+console.log(`6. 위험한 오판      ${dangerous.length}건 — 목표 0건 ${dangerous.length === 0 ? "✅" : "❌"}${dangerous.length ? " (" + dangerous.map((r) => r.id).join(", ") + ")" : ""}`);
 for (const [name, ok] of basics) console.log(`${ok ? "✅" : "❌"} ${name}`);
 const verdictRows = rows.filter((r) => r.feature === "청렴 콕!");
 if (verdictRows.length) console.log(`(참고) 청렴 콕! 결과 단계가 예상과 맞음: ${pct(verdictRows.filter((r) => r.verdictOk).length, verdictRows.length)}`);

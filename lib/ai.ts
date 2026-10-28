@@ -8,6 +8,16 @@ import type { z } from "zod";
 /** 모델 이름은 .env의 OPENAI_MODEL로 바꿀 수 있다. */
 const DEFAULT_MODEL = "gpt-5.5";
 
+/** 추론 강도. 높일수록 판단이 안정적이지만 느려진다. .env의 OPENAI_REASONING으로 바꿀 수 있다. */
+const DEFAULT_REASONING = "medium";
+const REASONING_VALUES = ["none", "minimal", "low", "medium", "high"] as const;
+type Reasoning = (typeof REASONING_VALUES)[number];
+
+function reasoningEffort(): Reasoning {
+  const value = process.env.OPENAI_REASONING as Reasoning | undefined;
+  return value && REASONING_VALUES.includes(value) ? value : DEFAULT_REASONING;
+}
+
 /** AI 호출 하나의 시간 제한 */
 const TIMEOUT_MS = 90_000;
 
@@ -50,6 +60,7 @@ export async function askStructured<T extends z.ZodType>({ instructions, input, 
     try {
       const response = await getClient().responses.parse({
         model,
+        reasoning: { effort: reasoningEffort() },
         instructions,
         input,
         text: { format: zodTextFormat(schema, name) },
