@@ -31,7 +31,7 @@
 | 언어 | TypeScript (strict), 경로 별칭 `@/*` → 프로젝트 루트 |
 | 린트 | ESLint 9 flat config (`eslint-config-next` core-web-vitals + typescript) |
 | 배포 | Vercel (환경 변수는 Vercel 설정에 따로 등록) |
-| AI 서비스 | OpenAI (`openai` 공식 SDK). 키는 `.env`의 `OPENAI_API_KEY`, 모델은 `OPENAI_MODEL` |
+| AI 서비스 | OpenAI (`openai` 공식 SDK). 키는 `.env`의 `OPENAI_API_KEY`, 모델은 `OPENAI_MODEL` (기본값 `gpt-5.5`, `lib/ai.ts`) |
 | 추가 도구 | `zod`(AI 답 모양 검사), `server-only`(키를 읽는 모듈 보호) — 설계는 [DESIGN.md](DESIGN.md) |
 
 ## 2. Next.js 16 작업 규칙
@@ -55,9 +55,10 @@
 npm run dev     # 개발 서버 (http://localhost:3000)
 npm run build   # 프로덕션 빌드 — 작업 완료 전 반드시 통과 확인
 npm run lint    # ESLint
+npm run eval    # 품질 측정 (개발 서버를 먼저 띄운다. 일부만: npm run eval -- I01 B02)
 ```
 
-테스트 프레임워크는 아직 없다. 품질 측정(PRD 9장 개발 단위 15~16번)을 만들 때 함께 정한다.
+테스트 프레임워크는 쓰지 않는다. 품질은 `scripts/eval.mjs`가 `data/eval/questions.json`의 테스트 질문 20개를 API에 보내 성공 기준(근거 정확도·표시율·지어낸 조문·응답 시간·개인정보 차단·정해진 문구)을 잰다.
 
 ## 4. 폴더 구조
 
@@ -68,6 +69,8 @@ app/
   api/                  # Route Handler (청렴 콕!·사업 리스크 콕! API, 서버 전용) — 예정
 lib/                    # 문서 불러오기·근거 검색·개인정보 검사·AI 호출·근거 검증 (서버 전용은 import 'server-only') — 예정
 data/documents/         # 근거 문서 데이터 (문서 1개 = JSON 1개, 조문 단위). 형식은 data/documents/README.md
+data/eval/              # 품질 측정용 테스트 질문과 정답표
+scripts/eval.mjs        # 품질 측정 스크립트 (npm run eval)
 PRD.md                  # 기획서 (기준 문서)
 ```
 

@@ -72,7 +72,7 @@ export const INTEGRITY_TOPICS: Topic[] = [
   {
     id: "privateInterest",
     label: "사적 이해관계",
-    keywords: ["가족", "배우자", "아내", "남편", "부모", "자녀", "친척", "친구", "지인", "동창", "동기", "사적", "이해관계", "회피", "채용", "수의계약", "거래하", "거래했", "빌려"],
+    keywords: ["가족", "배우자", "아내", "남편", "부모", "자녀", "친척", "친구", "지인", "동창", "동기", "사적", "이해관계", "회피", "채용", "수의계약", "거래하", "거래했", "빌려", "빌리", "빌린", "대여", "꾸"],
     refs: [
       ["law-conflict", "제2조"], ["law-conflict", "제5조"], ["law-conflict", "제7조"], ["law-conflict", "제9조"], ["law-conflict", "제11조"], ["law-conflict", "제12조"],
       ["law-conflict-decree", "제3조"], ["law-conflict-decree", "제4조"],
@@ -105,9 +105,10 @@ export const INTEGRITY_TOPICS: Topic[] = [
   {
     id: "report",
     label: "부패행위 신고",
-    keywords: ["신고", "제보", "부패", "비리", "고발", "위반행위", "공익"],
+    keywords: ["신고", "제보", "부패", "비리", "고발", "위반행위", "공익", "목격", "봤어", "보았", "동료가", "상급자가", "팀장이"],
     refs: [
       ["law-anticorruption", "제55조"], ["law-anticorruption", "제56조"], ["law-anticorruption", "제62조"], ["law-anticorruption", "제64조"],
+      ["law-cheongtak", "제13조"], ["law-conflict", "제18조"],
       ["rule-code-of-conduct", "제45조"], ["rule-code-of-conduct", "제46조"], ["rule-code-of-conduct", "제48조"],
       ["law-whistleblower", "제6조"], ["law-whistleblower", "제15조"],
       ["rule-corruption-report", "제3조"], ["rule-corruption-report", "제4조"],

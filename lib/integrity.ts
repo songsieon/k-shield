@@ -39,7 +39,14 @@ export async function runIntegrity({ situation, turns }: IntegrityRequest): Prom
   const mustDecide = turns.length >= MAX_QUESTIONS;
   const answer = await askStructured({
     instructions: INTEGRITY_INSTRUCTIONS,
-    input: buildIntegrityInput({ situation, turns, official, references, mustDecide }),
+    input: buildIntegrityInput({
+      situation,
+      turns,
+      official,
+      references,
+      mustDecide,
+      topicHints: topics.map((t) => ({ label: t.label, refs: resolveRefs(t.refs).filter((ref) => !ref.startsWith("ref-")) })),
+    }),
     schema: integrityAiSchema,
     name: "integrity_answer",
   });

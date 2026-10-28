@@ -6,7 +6,7 @@ import { zodTextFormat } from "openai/helpers/zod";
 import type { z } from "zod";
 
 /** 모델 이름은 .env의 OPENAI_MODEL로 바꿀 수 있다. */
-const DEFAULT_MODEL = "gpt-5.4-mini";
+const DEFAULT_MODEL = "gpt-5.5";
 
 /** AI 호출 하나의 시간 제한 */
 const TIMEOUT_MS = 90_000;

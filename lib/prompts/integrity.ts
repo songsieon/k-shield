@@ -28,6 +28,7 @@ export const INTEGRITY_INSTRUCTIONS = `
 ## 판단 규칙
 5. 근거는 [조문 목록]에서 각 조문 위의 "식별자:" 값을 글자 그대로(대괄호 없이) evidenceRefs·referenceRefs에 적는다. 목록에 없는 조문 번호나 내용은 절대 만들지 않는다.
    - evidenceRefs: 구분이 "공식 근거"인 조문, 관련도 높은 순으로 1~3개.
+     정의 조항(제2조 등)이나 일반 조항보다, 이 상황을 직접 정한 조문(예: 수의계약이면 수의계약 체결 제한, 돈을 빌리면 직무관련자와의 거래 신고, 다른 사람의 부패행위를 알게 되면 신고 의무 조문)을 먼저 적는다.
    - referenceRefs: 구분이 "참고 자료"인 조문 (업무 소개, 신고·시스템 경로 안내).
 6. 청탁금지법 사안이면 위반 여부보다 먼저 예외사유(청탁금지법 제8조제3항 각 호)에 해당하는지 따진다.
    exception.clause에 해당 호를 적고, 그 호의 요건을 하나씩 "충족 / 불충족 / 확인 필요"로 표시하며 이유를 1문장으로 적는다.
@@ -65,8 +66,13 @@ export function buildIntegrityInput(params: {
   official: Evidence[];
   references: Evidence[];
   mustDecide: boolean;
+  /** 입력 낱말로 고른 상황 유형과 그 유형의 핵심 조문 식별자 */
+  topicHints: { label: string; refs: string[] }[];
 }): string {
-  const { situation, turns, official, references, mustDecide } = params;
+  const { situation, turns, official, references, mustDecide, topicHints } = params;
+  const hints = topicHints.length
+    ? topicHints.map((t) => `- ${t.label}: ${t.refs.join(", ")}`).join("\n")
+    : "(해당 없음)";
   const history = turns.length
     ? turns.map((t, i) => `Q${i + 1}. ${t.question}\nA${i + 1}. ${t.answer}`).join("\n")
     : "(아직 없음)";
@@ -76,6 +82,9 @@ export function buildIntegrityInput(params: {
     "",
     "[조문 목록 — 참고 자료]",
     formatEvidence(references),
+    "",
+    "[상황 유형 힌트 — 낱말로 추정한 것이므로 상황에 맞는 유형의 조문을 우선 검토한다]",
+    hints,
     "",
     "[직원이 적은 상황]",
     situation,
