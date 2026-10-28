@@ -68,7 +68,7 @@ export async function runIntegrity({ situation, turns }: IntegrityRequest): Prom
 }
 
 /**
- * Plan SC 6(위험한 오판 0건): "문제없음"은 한 번 더 검토한다.
+ * Plan SC 9(위험한 오판 0건): "문제없음"은 한 번 더 검토한다.
  * 금지·신고 대상에 해당할 여지가 있다고 보면 결과를 낮추고 이유를 요약과 확인할 것에 남긴다.
  */
 async function reviewNoProblem(
@@ -127,7 +127,7 @@ function checkResult(answer: IntegrityAiAnswer, allowed: string[]): IntegrityRes
   const requirements = ai.exception?.requirements.filter((r) => r.item.trim()) ?? [];
   const amounts = ai.amounts.filter((a) => Number.isFinite(a.given) && Number.isFinite(a.limit) && a.given > 0 && a.limit > 0);
 
-  // Plan SC 6(위험한 오판 0건): AI가 "문제없음"이라고 해도 서버가 아래 경우에는 낮춘다
+  // Plan SC 9(위험한 오판 0건): AI가 "문제없음"이라고 해도 서버가 아래 경우에는 낮춘다
   let verdict = ai.verdict;
   if (verdict === "문제없음" && amounts.some((a) => a.given > a.limit)) {
     // 받은(받을) 금액이 기준을 넘으면 문제없음이 될 수 없다
