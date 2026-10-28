@@ -20,3 +20,6 @@ export const MAX_INPUT_LENGTH = 5000;
 
 /** 청렴 콕! 추가 질문 최대 개수 (PRD 5장 규칙 2) */
 export const MAX_QUESTIONS = 10;
+
+/** 사업 리스크 콕! 필수 정보 4가지 (PRD 5장 must ② 규칙 1) — 하나씩 물으므로 질문도 최대 4개 */
+export const REQUIRED_PLAN_FIELDS = ["사업 목적", "대상", "예산", "계약 방식"] as const;

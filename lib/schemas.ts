@@ -2,7 +2,7 @@
 // OpenAI 구조화 답은 모든 칸이 있어야 하므로, 없을 수 있는 칸은 nullable로 둔다.
 import { z } from "zod";
 
-import { MAX_INPUT_LENGTH, MAX_QUESTIONS } from "./messages";
+import { MAX_INPUT_LENGTH, MAX_QUESTIONS, REQUIRED_PLAN_FIELDS } from "./messages";
 
 // ── 요청 ─────────────────────────────────────────────
 
@@ -64,3 +64,35 @@ export const integrityAiSchema = z.object({
 });
 
 export type IntegrityAiAnswer = z.infer<typeof integrityAiSchema>;
+
+// ── 사업 리스크 콕! ──────────────────────────────────
+
+export const businessRiskRequestSchema = z.object({
+  plan: z.string().trim().min(1).max(MAX_INPUT_LENGTH),
+  turns: z.array(turnSchema).max(REQUIRED_PLAN_FIELDS.length).default([]),
+});
+
+export type BusinessRiskRequest = z.infer<typeof businessRiskRequestSchema>;
+
+/** 1단계: 필수 정보가 다 있는지 */
+export const planCheckAiSchema = z.object({
+  kind: z.enum(["question", "ready", "out_of_scope"]),
+  missing: z.array(z.enum(REQUIRED_PLAN_FIELDS)),
+  question: z.string().nullable(),
+});
+
+/** 2단계: 전문가 한 명의 검토 */
+export const expertReviewAiSchema = z.object({
+  issues: z.array(
+    z.object({
+      risk: z.string(),
+      evidenceRefs: z.array(z.string()),
+      level: z.enum(["상", "중", "하"]),
+      reason: z.string(),
+      improvement: z.string(),
+      relatedLaws: z.array(z.string()),
+    })
+  ),
+});
+
+export type ExpertReviewAiAnswer = z.infer<typeof expertReviewAiSchema>;

@@ -19,7 +19,7 @@ export default function EvidenceList({ items, title = "근거" }: EvidenceListPr
 
   return (
     <div className="flex flex-col gap-2">
-      <h3 className="text-sm font-semibold text-muted">{title}</h3>
+      {title && <h3 className="text-sm font-semibold text-muted">{title}</h3>}
       <ul className="flex flex-col gap-2">
         {items.map((item) => (
           <li
