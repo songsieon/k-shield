@@ -31,7 +31,8 @@
 | 언어 | TypeScript (strict), 경로 별칭 `@/*` → 프로젝트 루트 |
 | 린트 | ESLint 9 flat config (`eslint-config-next` core-web-vitals + typescript) |
 | 배포 | Vercel (환경 변수는 Vercel 설정에 따로 등록) |
-| AI 서비스 | 미정 — PRD 9장 개발 단위 4번에서 결정. `.env`에 `OPENAI_API_KEY`가 준비돼 있음 |
+| AI 서비스 | OpenAI (`openai` 공식 SDK). 키는 `.env`의 `OPENAI_API_KEY`, 모델은 `OPENAI_MODEL` |
+| 추가 도구 | `zod`(AI 답 모양 검사), `server-only`(키를 읽는 모듈 보호) — 설계는 [DESIGN.md](DESIGN.md) |
 
 ## 2. Next.js 16 작업 규칙
 

@@ -201,7 +201,8 @@
 | 고정 이유 | STEP 2에서 my-app2에 이미 설치했고, Part 5에서 Vercel로 배포할 예정이라 그대로 이어지게 하기 위함 |
 | 함께 설치된 기본 도구 | TypeScript(코드 언어), Tailwind CSS(디자인), ESLint(코드 검사) — Next.js 설치 시 기본값으로 포함 |
 | 배포 | Vercel (Part 5) |
-| AI 서비스 | 개발 단계에서 결정 |
+| AI 서비스 | OpenAI (설계 단계에서 결정, 모델 이름은 `.env`의 `OPENAI_MODEL`로 설정) |
+| 추가 도구 | openai 공식 SDK(AI 호출), zod(AI 답 모양 검사), server-only(키 노출 방지) — 자세한 내용은 DESIGN.md 2장 |
 
 ## 9. 개발 단위
 *핵심 기능을 작은 작업 단위로 나눈 목록 (만들 순서대로)*
