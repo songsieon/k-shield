@@ -2,6 +2,7 @@ import { getAllDocuments, getEvidence } from "@/lib/documents";
 import type { Evidence } from "@/lib/types";
 
 import EvidenceList from "./_components/EvidenceList";
+import IntegrityCheck from "./_components/IntegrityCheck";
 import MainTabs from "./_components/MainTabs";
 import NoticeBar from "./_components/NoticeBar";
 
@@ -15,7 +16,7 @@ function getDataDate(): string {
     .at(-1) ?? "";
 }
 
-// TODO(PLAN 16·21): 기능 화면을 만들면 아래 준비 중 패널과 예시 근거를 지운다.
+// TODO(PLAN 21): 사업 리스크 콕! 화면을 만들면 아래 준비 중 패널과 예시 근거를 지운다.
 function ComingSoon({ name, sample }: { name: string; sample: Evidence[] }) {
   return (
     <div className="flex flex-col gap-4 rounded-xl border border-dashed border-border bg-card p-6">
@@ -26,11 +27,7 @@ function ComingSoon({ name, sample }: { name: string; sample: Evidence[] }) {
 }
 
 export default function Home() {
-  const sample = [
-    "law-cheongtak#제8조(금품등의 수수 금지)",
-    "rule-solicitation-report#제4조(수수 금지 금품등의 신고)",
-    "ref-report-channels#3. 수수 금지 금품등(선물·모바일 상품권 포함)을 받은 경우",
-  ]
+  const sample = ["law-public-contract-rule#제8조(수의계약)"]
     .map((ref) => getEvidence(ref))
     .filter((e): e is Evidence => Boolean(e));
 
@@ -45,8 +42,8 @@ export default function Home() {
 
       <main>
         <MainTabs
-          integrity={<ComingSoon name="청렴 콕!" sample={sample} />}
-          businessRisk={<ComingSoon name="사업 리스크 콕!" sample={sample.slice(0, 1)} />}
+          integrity={<IntegrityCheck />}
+          businessRisk={<ComingSoon name="사업 리스크 콕!" sample={sample} />}
         />
       </main>
 

@@ -15,7 +15,7 @@ export const INTEGRITY_TOPICS: Topic[] = [
   {
     id: "gift",
     label: "선물·금품·식사",
-    keywords: ["선물", "금품", "상품권", "기프티콘", "카카오톡", "모바일", "식사", "밥", "음식", "커피", "접대", "향응", "골프", "경조사", "축의", "조의", "화환", "명절", "현금", "돈", "받았"],
+    keywords: ["선물", "금품", "상품권", "기프티콘", "카카오톡", "모바일", "식사", "밥", "음식", "저녁", "점심", "회식", "술", "커피", "접대", "향응", "골프", "경조사", "축의", "조의", "화환", "명절", "현금", "돈", "받았"],
     refs: [
       ["law-cheongtak", "제2조"], ["law-cheongtak", "제8조"], ["law-cheongtak", "제9조"], ["law-cheongtak", "제22조"], ["law-cheongtak", "제23조"],
       ["law-cheongtak-decree", "제17조"], ["law-cheongtak-decree", "제18조"], ["law-cheongtak-decree", "[별표 1]"],
