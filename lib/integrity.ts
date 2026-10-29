@@ -1,4 +1,4 @@
-// Design Ref: §5.1 — 청렴 신호등 처리 순서: 근거 검색 → AI → 답 점검 → 근거 검증·원문 붙이기
+// Design Ref: §5.1 — 반부패·청렴 Check 처리 순서: 근거 검색 → AI → 답 점검 → 근거 검증·원문 붙이기
 import "server-only";
 
 import { askStructured } from "./ai";
@@ -110,7 +110,7 @@ function checkResult(answer: IntegrityAiAnswer, allowed: string[]): IntegrityRes
   // AI가 참고 자료를 공식 근거 칸에 적었어도 버리지 않고 참고 자료로 모은다
   const references = [...listed, ...misplaced.filter((m) => !listed.some((l) => l.ref === m.ref))];
   // 버린 근거 식별자만 남긴다 (직원 입력 내용은 로그에 남기지 않는다)
-  if (dropped.length || droppedRefs.length) console.warn(`[준법 신호등] 데이터에 없는 근거 제외: ${[...dropped, ...droppedRefs].join(" | ")}`);
+  if (dropped.length || droppedRefs.length) console.warn(`[K-SHIELD] 데이터에 없는 근거 제외: ${[...dropped, ...droppedRefs].join(" | ")}`);
   if (evidence.length === 0) return noEvidenceResult();
 
   const hasChannels = references.some((r) => r.docId === CHANNELS_DOC);

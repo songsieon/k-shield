@@ -5,7 +5,7 @@ import type { ActionKind, IntegrityResult, RequirementStatus } from "@/lib/types
 import EvidenceList from "./EvidenceList";
 import SignalLight from "./SignalLight";
 
-// Design Ref: §8.2 — 청렴 신호등 결과 카드: 신호등 → 단계 → 요약 → 예외 요건표 → 금액 비교 → 해야 할 일 → 확인할 것 → 근거
+// Design Ref: §8.2 — 반부패·청렴 Check 결과 카드: 신호등 → 단계 → 요약 → 예외 요건표 → 금액 비교 → 해야 할 일 → 확인할 것 → 근거
 // 내부 판정은 4단계 그대로이고, 화면에는 신호 3색(초록·노랑·빨강)으로 함께 보여 준다. 노랑은 "위반 가능성 있음"과 "확인 필요"를 글자로 구분한다.
 
 const BADGE_STYLE: Record<Signal, string> = {

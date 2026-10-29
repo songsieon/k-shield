@@ -10,7 +10,7 @@ export interface Topic {
   refs: RefSpec[];
 }
 
-/** 청렴 신호등 상황 유형 */
+/** 반부패·청렴 Check 상황 유형 */
 export const INTEGRITY_TOPICS: Topic[] = [
   {
     id: "gift",
@@ -117,7 +117,7 @@ export const INTEGRITY_TOPICS: Topic[] = [
   },
 ];
 
-/** 청렴 신호등에서 상황과 관계없이 항상 함께 주는 조문 (직무관련자 정의, 업무 소개, 상담 경로) */
+/** 반부패·청렴 Check에서 상황과 관계없이 항상 함께 주는 조문 (직무관련자 정의, 업무 소개, 상담 경로) */
 export const INTEGRITY_ALWAYS: RefSpec[] = [
   ["rule-code-of-conduct", "제2조"],
   ["rule-code-of-conduct", "제44조"],
@@ -126,7 +126,7 @@ export const INTEGRITY_ALWAYS: RefSpec[] = [
   ["ref-report-channels", "10."],
 ];
 
-/** 사업리스크 신호등 전문가별 검색 범위와 꼭 볼 조문 */
+/** 사업리스크 Check 전문가별 검색 범위와 꼭 볼 조문 */
 export interface ExpertScope {
   role: "법률" | "청렴·윤리" | "계약·예산" | "국민 관점";
   docIds: string[];
@@ -159,7 +159,7 @@ export const EXPERT_SCOPES: ExpertScope[] = [
   },
 ];
 
-/** 입력 낱말로 고른 청렴 신호등 상황 유형 */
+/** 입력 낱말로 고른 반부패·청렴 Check 상황 유형 */
 export function pickTopics(text: string): Topic[] {
   return INTEGRITY_TOPICS.filter((topic) => topic.keywords.some((word) => text.includes(word)));
 }

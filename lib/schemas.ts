@@ -18,7 +18,7 @@ export const integrityRequestSchema = z.object({
 
 export type IntegrityRequest = z.infer<typeof integrityRequestSchema>;
 
-// ── 청렴 신호등 AI 답 ───────────────────────────────────
+// ── 반부패·청렴 Check AI 답 ───────────────────────────────────
 
 export const integrityAiSchema = z.object({
   kind: z.enum(["question", "result", "out_of_scope"]),
@@ -72,7 +72,7 @@ export const integrityReviewAiSchema = z.object({
   reason: z.string(),
 });
 
-// ── 사업리스크 신호등 ──────────────────────────────────
+// ── 사업리스크 Check ──────────────────────────────────
 
 export const businessRiskRequestSchema = z.object({
   plan: z.string().trim().min(1).max(MAX_INPUT_LENGTH),

@@ -12,13 +12,13 @@
   --notice: #fff7e0;
   --notice-foreground: #6b4e00;
 
-  /* 청렴 신호등 결과 4단계 */
+  /* 반부패·청렴 Check 결과 4단계 */
   --verdict-ok: #1d7a46;
   --verdict-caution: #b7791f;
   --verdict-danger: #c53030;
   --verdict-check: #4a5568;
 
-  /* 사업리스크 신호등 위험 수준 */
+  /* 사업리스크 Check 위험 수준 */
   --risk-high: #c53030;
   --risk-mid: #b7791f;
   --risk-low: #1d7a46;

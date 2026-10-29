@@ -1,4 +1,4 @@
-// Design Ref: §7.2 — 사업리스크 신호등 API. 서버는 요청 내용을 저장하지 않는다.
+// Design Ref: §7.2 — 사업리스크 Check API. 서버는 요청 내용을 저장하지 않는다.
 import { failureResponse, readRequest } from "@/lib/apiResponse";
 import { runBusinessRisk } from "@/lib/businessRisk";
 import { businessRiskRequestSchema } from "@/lib/schemas";

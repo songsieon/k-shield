@@ -45,7 +45,7 @@ export interface Turn {
   answer: string;
 }
 
-// ── 청렴 신호등 ─────────────────────────────────────────
+// ── 반부패·청렴 Check ─────────────────────────────────────────
 
 export type Verdict = "문제없음" | "위반 가능성 있음" | "위반 소지 높음" | "확인 필요";
 
@@ -89,7 +89,7 @@ export type IntegrityResponse =
   | { kind: "result"; result: IntegrityResult }
   | { kind: "out_of_scope"; message: string };
 
-// ── 사업리스크 신호등 ──────────────────────────────────
+// ── 사업리스크 Check ──────────────────────────────────
 
 export type RiskLevel = "상" | "중" | "하";
 

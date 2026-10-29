@@ -1,9 +1,9 @@
 // nice 기능: 최근 점검 기록 10개. 서버가 아니라 이 브라우저(localStorage)에만 저장한다 (PRD 7장).
 import type { IntegrityResult, RiskReport, Turn } from "./types";
 
-const STORAGE_KEY = "junbeop-signal-history-v1";
+const STORAGE_KEY = "k-shield-history-v1";
 const MAX_ENTRIES = 10;
-const CHANGE_EVENT = "junbeop-signal-history-change";
+const CHANGE_EVENT = "k-shield-history-change";
 
 export type HistoryEntry =
   | { id: string; kind: "integrity"; createdAt: string; title: string; label: string; input: string; turns: Turn[]; result: IntegrityResult }

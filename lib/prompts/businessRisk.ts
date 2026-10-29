@@ -1,4 +1,4 @@
-// Design Ref: §5.2 ③⑤, PRD 5장 must ② 규칙 1~8 — 사업리스크 신호등 AI 지시문
+// Design Ref: §5.2 ③⑤, PRD 5장 must ② 규칙 1~8 — 사업리스크 Check AI 지시문
 import { REQUIRED_PLAN_FIELDS } from "../messages";
 import type { Evidence, ExpertRole, Turn } from "../types";
 

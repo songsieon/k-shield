@@ -47,6 +47,6 @@ function collectTexts(value: unknown): string[] {
 /** 처리 중 오류를 응답으로 바꾼다. 입력 내용은 로그에 남기지 않는다. */
 export function failureResponse(error: unknown): Response {
   const reason = error instanceof AiError ? error.message : error instanceof Error ? error.name : "unknown";
-  console.error(`[준법 신호등] 처리 실패: ${reason}`);
+  console.error(`[K-SHIELD] 처리 실패: ${reason}`);
   return errorResponse("AI_ERROR", 502, MESSAGES.aiError);
 }

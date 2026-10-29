@@ -3,7 +3,7 @@
 export const MESSAGES = {
   waiting: "검토 중입니다…",
   aiError: "잠시 후 다시 시도해 주세요",
-  outOfScope: "준법 신호등은 법령·청렴·윤리 점검만 도와드립니다.",
+  outOfScope: "K-SHIELD는 법령·청렴·윤리 점검만 도와드립니다.",
   noEvidence: "근거를 찾지 못했습니다. 청렴·윤리 담당 부서에 확인하세요",
   conflict: "서로 다르게 정해져 있으니 담당 부서에 확인하세요",
   privacyDetected: "개인정보가 포함돼 있어요",
@@ -18,8 +18,8 @@ export const MESSAGES = {
 /** 한 번에 받을 수 있는 입력 길이 (과도한 요청 방지) */
 export const MAX_INPUT_LENGTH = 5000;
 
-/** 청렴 신호등 추가 질문 최대 개수 (PRD 5장 규칙 2) */
+/** 반부패·청렴 Check 추가 질문 최대 개수 (PRD 5장 규칙 2) */
 export const MAX_QUESTIONS = 10;
 
-/** 사업리스크 신호등 필수 정보 4가지 (PRD 5장 must ② 규칙 1) — 하나씩 물으므로 질문도 최대 4개 */
+/** 사업리스크 Check 필수 정보 4가지 (PRD 5장 must ② 규칙 1) — 하나씩 물으므로 질문도 최대 4개 */
 export const REQUIRED_PLAN_FIELDS = ["사업 목적", "대상", "예산", "계약 방식"] as const;

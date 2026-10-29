@@ -1,4 +1,4 @@
-// Design Ref: §7.1 — 청렴 신호등 API. 서버는 요청 내용을 저장하지 않는다.
+// Design Ref: §7.1 — 반부패·청렴 Check API. 서버는 요청 내용을 저장하지 않는다.
 import { failureResponse, readRequest } from "@/lib/apiResponse";
 import { runIntegrity } from "@/lib/integrity";
 import { integrityRequestSchema } from "@/lib/schemas";
