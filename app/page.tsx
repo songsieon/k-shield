@@ -1,10 +1,12 @@
+import Image from "next/image";
+
 import { getAllDocuments } from "@/lib/documents";
 
 import BusinessRiskCheck from "./_components/BusinessRiskCheck";
 import IntegrityCheck from "./_components/IntegrityCheck";
-import ShieldTeam from "./_components/ShieldTeam";
 import MainTabs from "./_components/MainTabs";
 import NoticeBar from "./_components/NoticeBar";
+import ShieldTeam from "./_components/ShieldTeam";
 
 // Design Ref: §8.1 — 화면 1개: 제목 → 안내 띠 → 탭 2개 → 하단 기준일
 
@@ -21,7 +23,10 @@ export default function Home() {
     <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-5 px-4 py-8">
       <header className="hero-card relative flex flex-col gap-3 overflow-hidden rounded-3xl p-5 pb-6 text-white shadow-lg sm:p-7 sm:pb-8">
         <div className="flex items-center gap-3 sm:gap-6">
-          <div className="flex min-w-0 flex-1 flex-col justify-center">
+          <div className="flex min-w-0 flex-1 flex-col items-start justify-center gap-3">
+            <span className="rounded-xl bg-white px-2.5 py-1.5 shadow-md">
+              <Image src="/kamco-logo.png" alt="캠코 한국자산관리공사 로고" width={340} height={300} className="h-12 w-auto sm:h-16" priority />
+            </span>
             <h1 className="whitespace-nowrap text-3xl font-extrabold tracking-tight sm:text-4xl">K-SHIELD</h1>
           </div>
           <ShieldTeam />
