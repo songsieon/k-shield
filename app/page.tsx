@@ -35,7 +35,7 @@ export default function Home() {
         <p className="whitespace-nowrap text-[clamp(0.6rem,2.9vw,1rem)] font-semibold tracking-wide text-white">
           <b className="text-hero-key">K</b>AMCO <b className="text-hero-key">S</b>mart <b className="text-hero-key">H</b>elp for <b className="text-hero-key">I</b>ntegrity, <b className="text-hero-key">E</b>thics, <b className="text-hero-key">L</b>aw &amp; <b className="text-hero-key">D</b>ecisions
         </p>
-        <p className="border-t border-white/20 pt-3 text-sm leading-6 text-white/90 sm:text-base">부패방지 법령·내규 준수 여부와 사업 수행의 법령 위반 및 윤리적 리스크를 간편하게, 미리 점검하세요.</p>
+        <p className="border-t border-white/20 pt-3 text-sm leading-6 text-white/90 [text-wrap:balance] sm:text-base">부패방지 법령·내규 준수 여부와 사업 수행의 법령 위반 및 윤리적 리스크를<br className="hidden sm:block" /> 간편하게, 미리 점검하세요.</p>
         <div className="absolute inset-x-0 bottom-0 h-1.5 bg-brand-red" aria-hidden="true" />
       </header>
 
