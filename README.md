@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# K-SHIELD
 
-## Getting Started
+**K**AMCO **S**mart **H**elp for **I**ntegrity, **E**thics, **L**aw & **D**ecisions
 
-First, run the development server:
+캠코(한국자산관리공사) 임직원이 청렴·윤리 상황이나 사업계획을 입력하면, **법령·내규 원문을 근거로** 위반 가능성과 후속 조치, 사업 리스크를 신호등(🟢🟡🔴)으로 안내하는 웹 서비스입니다.
+결과는 사전 점검용 참고이며, 효력 있는 최종 판정이나 법률 자문을 대신하지 않습니다.
+
+## 주요 기능
+
+- **반부패·청렴 Check** — 상황을 입력하면 쉬운 사실 질문(최대 10개)을 거쳐 4단계 판정(문제없음 / 위반 가능성 있음 / 위반 소지 높음 / 확인 필요)을 냅니다. 예외사유 요건표, 금액 비교(합산 포함), 해야 할 일(법령·사내 절차·시스템 경로), 근거 1~3개를 함께 보여 줍니다.
+- **사업리스크 Check** — 사업 목적·대상·예산·계약 방식을 받아 AI 전문가 4명(법률, 청렴·윤리, 계약·예산, 국민 관점)이 쟁점별 위험 수준(상/중/하)과 개선 권고를 담은 보고서를 만듭니다. 사업계획서(PDF·HWP·TXT) 불러오기와 PDF 저장을 지원합니다.
+
+## 지어내지 않는 구조
+
+- 근거는 앱에 담긴 법령·내규 데이터(`data/documents/`)에서만 가져옵니다.
+- AI가 고른 근거를 서버가 실제 조문과 대조하고, 없는 조문은 빼서 원문만 화면에 붙입니다.
+- "문제없음"은 서버가 한 번 더 검토하고, 금액 초과·예외 요건 미충족이면 낮춥니다.
+- 개인정보(주민번호·전화·계좌) 형식은 전송 전에 막고, 점검 내용은 서버에 저장하지 않습니다.
+
+## 품질 측정
+
+테스트 질문 20개(반부패·청렴 15 + 사업리스크 5)로 성공 기준 9개를 잽니다. 최근 측정에서 근거 정확도 100%, 지어낸 조문 0건, 위험한 오판 0건이었습니다. 자세한 내용은 [REPORT.md](REPORT.md)를 보세요.
+
+## 기술 스택
+
+Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · OpenAI API · Vercel
+
+## 문서
+
+- [PRD.md](PRD.md) — 기획서
+- [PLAN.md](PLAN.md) — 계획
+- [DESIGN.md](DESIGN.md) — 설계
+- [REPORT.md](REPORT.md) — 완료 보고서
+
+## 실행 방법
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+# .env 파일에 OPENAI_API_KEY 를 넣습니다 (OPENAI_MODEL 은 선택, 기본값 gpt-5.5)
+npm run dev      # http://localhost:3000
+npm run build
+npm run eval     # 품질 측정 (개발 서버를 먼저 실행)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 주의
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- 일부 내규와 인트라넷 경로는 실습용 가상 자료이며 화면에 표시됩니다.
+- 입력 내용은 AI 처리를 위해 외부 서비스(OpenAI)로 전송됩니다. 개인정보는 입력하지 마세요.
