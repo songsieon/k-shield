@@ -1,8 +1,7 @@
 import Mascot from "./Mascot";
 
 // 마스코트 3종이 큰 방패를 함께 들고 서 있는 장식 그림 (K-SHIELD의 뜻을 그림으로). 비장하게 보이도록 움직이지 않는다.
-// 방패는 가운데에 세우고, 강아지·초록 토끼는 양옆에서 가장자리를 잡고, 하얀 토끼는 위에서 방패 윗부분을 잡는다.
-const HAND = "absolute z-30 h-3 w-4 rounded-full shadow-[0_1px_2px_rgba(0,0,0,0.45)] sm:h-4 sm:w-6";
+// 방패는 가운데에 세우고,
 
 export default function ShieldTeam() {
   return (
@@ -26,10 +25,6 @@ export default function ShieldTeam() {
         <path d="M47 62 L56 71 L74 50" fill="none" stroke="#ffffff" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
 
-      <span className={`${HAND} left-[40%] top-[47%] bg-[#fdfdfd]`} />
-      <span className={`${HAND} left-[53%] top-[47%] bg-[#fdfdfd]`} />
-      <span className={`${HAND} left-[25%] top-[66%] bg-[#efdcb8]`} />
-      <span className={`${HAND} right-[25%] top-[66%] bg-[#a6d124]`} />
     </div>
   );
 }
