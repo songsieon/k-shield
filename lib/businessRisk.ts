@@ -43,18 +43,19 @@ export async function runBusinessRisk({ plan, turns }: BusinessRiskRequest): Pro
 }
 
 async function reviewAsExpert(scope: ExpertScope, plan: string, turns: BusinessRiskRequest["turns"], query: string) {
-  const { official } = searchEvidence({
+  const { official, references } = searchEvidence({
     query,
     required: resolveRefs(scope.refs),
     docIds: scope.docIds,
     maxOfficial: 15,
-    maxReference: 0,
+    maxReference: 3,
   });
+  // 근거로 인정하는 것은 공식 근거뿐이다. 참고 자료(캠코 업무 소개 등)는 배경으로만 함께 준다.
   const allowed = official.map((e) => e.ref);
 
   const answer = await askStructured({
     instructions: expertInstructions(scope.role),
-    input: buildExpertInput(plan, turns, official),
+    input: buildExpertInput(plan, turns, [...official, ...references]),
     schema: expertReviewAiSchema,
     name: "expert_review",
   });

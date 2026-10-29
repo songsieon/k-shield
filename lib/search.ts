@@ -82,12 +82,10 @@ export function searchEvidence({ query, required = [], docIds, maxOfficial = 15,
     .sort((x, y) => y.score - x.score);
 
   const pick = (official: boolean, max: number): Evidence[] => {
-    const refs = [
-      ...required.filter((ref) => getEvidence(ref)?.category === (official ? "공식 근거" : "참고 자료")),
-      ...scored.filter((x) => x.a.official === official).map((x) => x.a.ref),
-    ];
-    // 필수 조문이 max보다 많으면 필수 조문은 모두 넣는다
-    const limit = Math.max(max, required.length);
+    const mustHave = required.filter((ref) => getEvidence(ref)?.category === (official ? "공식 근거" : "참고 자료"));
+    const refs = [...mustHave, ...scored.filter((x) => x.a.official === official).map((x) => x.a.ref)];
+    // 같은 구분(공식 근거/참고 자료)의 필수 조문이 max보다 많을 때만 필수 조문을 모두 넣는다
+    const limit = Math.max(max, mustHave.length);
     return [...new Set(refs)]
       .slice(0, limit)
       .map((ref) => getEvidence(ref))

@@ -43,7 +43,7 @@ export default function EvidenceList({ items, title = "근거" }: EvidenceListPr
             <button
               type="button"
               onClick={() => setOpened(item)}
-              className="shrink-0 rounded-md border border-accent px-3 py-1 text-sm text-accent hover:bg-accent hover:text-accent-foreground"
+              className="shrink-0 rounded-md border border-accent px-3 py-1 text-sm text-accent hover:bg-accent hover:text-accent-foreground print:hidden"
             >
               원문 보기
             </button>

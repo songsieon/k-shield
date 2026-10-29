@@ -49,7 +49,9 @@ async function post(api, body) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
   });
-  return { status: res.status, json: await res.json(), sec: (Date.now() - started) / 1000 };
+  // 시간 초과 등으로 JSON이 아닌 응답이 와도 측정 전체가 멈추지 않게 그 문항만 오류로 남긴다
+  const json = await res.json().catch(() => ({ error: { code: `HTTP_${res.status}` } }));
+  return { status: res.status, json, sec: (Date.now() - started) / 1000 };
 }
 
 /** 청렴 콕!: 질문이 오면 준비한 답을 순서대로 보내고, 결과가 나오면 돌려준다 */

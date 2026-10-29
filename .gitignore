@@ -42,3 +42,9 @@ next-env.d.ts
 
 # bkit 플러그인 상태 파일
 .bkit/
+
+# pdfjs files copied by scripts/copy-pdfjs.mjs
+/public/pdfjs/
+
+# 지울 파일 임시 보관 (사용자가 확인 후 삭제)
+/trash-can/

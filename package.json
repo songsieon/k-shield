@@ -7,11 +7,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "eval": "node scripts/eval.mjs"
+    "eval": "node scripts/eval.mjs",
+    "postinstall": "node scripts/copy-pdfjs.mjs"
   },
   "dependencies": {
+    "cfb": "^1.2.2",
     "next": "16.4.3",
     "openai": "^7.45.1",
+    "pdfjs-dist": "^6.4.299",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "server-only": "^0.0.1",

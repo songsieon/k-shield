@@ -42,25 +42,31 @@ export async function runIntegrity({ situation, turns }: IntegrityRequest): Prom
 
   // ⑤⑥ AI 호출 (질문이 10개 찼으면 판단을 요구)
   const mustDecide = turns.length >= MAX_QUESTIONS;
-  const answer = await askStructured({
-    instructions: INTEGRITY_INSTRUCTIONS,
-    input: buildIntegrityInput({
-      situation,
-      turns,
-      official,
-      references,
-      mustDecide,
-      topicHints: topics.map((t) => ({ label: t.label, refs: resolveRefs(t.refs).filter((ref) => !ref.startsWith("ref-")) })),
-    }),
-    schema: integrityAiSchema,
-    name: "integrity_answer",
-  });
+  const ask = () =>
+    askStructured({
+      instructions: INTEGRITY_INSTRUCTIONS,
+      input: buildIntegrityInput({
+        situation,
+        turns,
+        official,
+        references,
+        mustDecide,
+        topicHints: topics.map((t) => ({ label: t.label, refs: resolveRefs(t.refs).filter((ref) => !ref.startsWith("ref-")) })),
+      }),
+      schema: integrityAiSchema,
+      name: "integrity_answer",
+    });
+  let answer = await ask();
 
   if (answer.kind === "out_of_scope") return { kind: "out_of_scope", message: MESSAGES.outOfScope };
 
   if (answer.kind === "question" && !mustDecide && answer.question?.trim()) {
     return { kind: "question", question: answer.question.trim(), asked: turns.length + 1, max: MAX_QUESTIONS };
   }
+
+  // 질문을 10개 다 했는데도 AI가 또 질문하면 한 번 더 판단을 요구하고, 그래도 없으면 "확인 필요"로 끝낸다
+  if (mustDecide && !answer.result) answer = await ask();
+  if (mustDecide && !answer.result) return { kind: "result", result: insufficientFactsResult() };
 
   const result = checkResult(answer, allowed);
   if (result.verdict === "문제없음") await reviewNoProblem(result, { situation, turns, official });
@@ -99,8 +105,10 @@ function checkResult(answer: IntegrityAiAnswer, allowed: string[]): IntegrityRes
   if (!ai) return noEvidenceResult();
 
   // ⑦⑧ 근거 검증 + 원문 붙이기
-  const { evidence, dropped } = verifyRefs(ai.evidenceRefs, allowed, 3);
-  const { references, dropped: droppedRefs } = verifyRefs(ai.referenceRefs, allowed, 0);
+  const { evidence, references: misplaced, dropped } = verifyRefs(ai.evidenceRefs, allowed, 3);
+  const { references: listed, dropped: droppedRefs } = verifyRefs(ai.referenceRefs, allowed, 0);
+  // AI가 참고 자료를 공식 근거 칸에 적었어도 버리지 않고 참고 자료로 모은다
+  const references = [...listed, ...misplaced.filter((m) => !listed.some((l) => l.ref === m.ref))];
   // 버린 근거 식별자만 남긴다 (직원 입력 내용은 로그에 남기지 않는다)
   if (dropped.length || droppedRefs.length) console.warn(`[준법 콕] 데이터에 없는 근거 제외: ${[...dropped, ...droppedRefs].join(" | ")}`);
   if (evidence.length === 0) return noEvidenceResult();
@@ -163,5 +171,14 @@ function noEvidenceResult(): IntegrityResult {
     conflict: false,
     evidence: [],
     references: [],
+  };
+}
+
+/** 질문을 10개 다 했는데도 판단하지 못한 경우 (설계 §10.1) */
+function insufficientFactsResult(): IntegrityResult {
+  return {
+    ...noEvidenceResult(),
+    summary: "질문을 모두 했지만 판단에 필요한 사실을 확인하지 못했습니다.",
+    toCheck: ["상황을 더 구체적으로 적어 다시 점검하거나, 청렴·윤리 담당 부서에 확인하세요"],
   };
 }

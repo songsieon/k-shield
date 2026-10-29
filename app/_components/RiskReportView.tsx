@@ -1,6 +1,7 @@
 import type { RiskLevel, RiskReport } from "@/lib/types";
 
 import EvidenceList from "./EvidenceList";
+import PrintButton from "./PrintButton";
 
 // Design Ref: §8.3 — 리스크 검토 보고서: 전문가별 쟁점(위험요소 → 근거 → 위험 수준 → 개선 권고) → 추가 확인 필요 사항
 
@@ -16,11 +17,17 @@ export default function RiskReportView({ report }: { report: RiskReport }) {
 
   return (
     <article className="flex flex-col gap-5">
-      <header className="rounded-xl border border-border bg-card px-5 py-4">
-        <h2 className="text-lg font-bold">리스크 검토 보고서</h2>
-        <p className="text-sm text-muted">
-          쟁점 {total}개 (위험 수준 상 {high}개) · 추가 확인 필요 {report.followUps.length}건
-        </p>
+      <header className="flex flex-wrap items-start justify-between gap-3 rounded-xl border border-border bg-card px-5 py-4">
+        <div>
+          <h2 className="text-lg font-bold">리스크 검토 보고서</h2>
+          <p className="text-sm text-muted">
+            쟁점 {total}개 (위험 수준 상 {high}개) · 추가 확인 필요 {report.followUps.length}건
+          </p>
+          <p className="hidden text-xs text-muted print:block">
+            사전 점검용 참고 자료이며 효력 있는 판정이나 법률 자문이 아닙니다. 공식 판단은 담당 부서가 합니다.
+          </p>
+        </div>
+        <PrintButton />
       </header>
 
       {report.experts.map((expert) => (

@@ -18,8 +18,11 @@ function reasoningEffort(): Reasoning {
   return value && REASONING_VALUES.includes(value) ? value : DEFAULT_REASONING;
 }
 
-/** AI 호출 하나의 시간 제한 */
-const TIMEOUT_MS = 90_000;
+/**
+ * AI 호출 하나의 시간 제한. SDK가 실패한 호출을 1번 다시 시도하므로 한 번 묻는 데 최대 100초.
+ * 청렴 콕!은 최악의 경우 판단(모양 오류로 한 번 더) 200초 + 재검토 100초 = 300초로, route의 maxDuration(300초) 안에 든다.
+ */
+const TIMEOUT_MS = 50_000;
 
 /** AI 호출 실패 (화면에는 "잠시 후 다시 시도해 주세요"만 보여 준다) */
 export class AiError extends Error {
@@ -50,13 +53,13 @@ export interface AskOptions<T extends z.ZodType> {
 
 /**
  * AI에게 묻고 정해진 모양의 답을 받는다.
- * 모양이 어긋나면 한 번 다시 묻고, 그래도 어긋나거나 호출이 실패하면 AiError를 던진다.
+ * 답 모양이 어긋날 때만 한 번 다시 묻는다. 호출 자체가 실패하면(시간 초과·크레딧 소진 등) 바로 AiError를 던진다.
  */
 export async function askStructured<T extends z.ZodType>({ instructions, input, schema, name }: AskOptions<T>): Promise<z.infer<T>> {
   const model = process.env.OPENAI_MODEL || DEFAULT_MODEL;
-  let lastReason = "알 수 없는 오류";
 
   for (let attempt = 0; attempt < 2; attempt++) {
+    let output: unknown;
     try {
       const response = await getClient().responses.parse({
         model,
@@ -65,13 +68,13 @@ export async function askStructured<T extends z.ZodType>({ instructions, input, 
         input,
         text: { format: zodTextFormat(schema, name) },
       });
-      const parsed = schema.safeParse(response.output_parsed);
-      if (parsed.success) return parsed.data;
-      lastReason = "AI 답이 정해진 모양과 다릅니다";
+      output = response.output_parsed;
     } catch (error) {
       if (error instanceof AiError) throw error;
-      lastReason = error instanceof Error ? error.message : String(error);
+      throw new AiError(error instanceof Error ? error.message : String(error));
     }
+    const parsed = schema.safeParse(output);
+    if (parsed.success) return parsed.data;
   }
-  throw new AiError(lastReason);
+  throw new AiError("AI 답이 정해진 모양과 다릅니다");
 }

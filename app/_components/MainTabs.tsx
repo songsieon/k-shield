@@ -22,7 +22,7 @@ export default function MainTabs({ integrity, businessRisk }: MainTabsProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      <div role="tablist" aria-label="기능 선택" className="grid grid-cols-2 gap-2">
+      <div role="tablist" aria-label="기능 선택" className="grid grid-cols-2 gap-2 print:hidden">
         {TABS.map((tab) => {
           const selected = active === tab.id;
           return (

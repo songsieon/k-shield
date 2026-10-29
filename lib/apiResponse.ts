@@ -29,11 +29,19 @@ export async function readRequest<T extends z.ZodType>(request: Request, schema:
     const tooLong = parsed.error.issues.some((issue) => issue.code === "too_big");
     return errorResponse("INVALID_INPUT", 400, tooLong ? MESSAGES.tooLongInput : MESSAGES.emptyInput);
   }
-  // 받은 글 전체(상황·질문·답)에서 개인정보를 한 번 더 찾는다
-  if (hasPrivacy(JSON.stringify(parsed.data))) {
+  // 받은 글(상황·사업계획·질문·답)을 하나씩 꺼내 개인정보를 한 번 더 찾는다 (줄바꿈이 그대로 남도록 따로 검사)
+  if (hasPrivacy(...collectTexts(parsed.data))) {
     return errorResponse("PRIVACY", 400, MESSAGES.privacyDetected);
   }
   return parsed.data;
+}
+
+/** 요청 안의 모든 글자 값을 꺼낸다 */
+function collectTexts(value: unknown): string[] {
+  if (typeof value === "string") return [value];
+  if (Array.isArray(value)) return value.flatMap(collectTexts);
+  if (value && typeof value === "object") return Object.values(value).flatMap(collectTexts);
+  return [];
 }
 
 /** 처리 중 오류를 응답으로 바꾼다. 입력 내용은 로그에 남기지 않는다. */

@@ -1,11 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
+import { ACCEPTED_FILE_TYPES, extractFileText, FileTextError } from "@/lib/fileText";
+import { addHistory, type HistoryEntry } from "@/lib/history";
 import { MAX_INPUT_LENGTH, MESSAGES } from "@/lib/messages";
 import { hasPrivacy } from "@/lib/privacy";
 import type { BusinessRiskResponse, ErrorBody, RiskReport, Turn } from "@/lib/types";
 
+import RecentHistory from "./RecentHistory";
 import RiskReportView from "./RiskReportView";
 
 // Design Ref: §8.3, §5.2 — 사업 리스크 콕! 화면. 사업계획과 추가 답은 브라우저에만 두고 매번 함께 보낸다.
@@ -22,6 +25,9 @@ export default function BusinessRiskCheck() {
   const [notice, setNotice] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [fileNote, setFileNote] = useState<string | null>(null);
+  const [reading, setReading] = useState(false);
+  const fileInput = useRef<HTMLInputElement>(null);
 
   async function send(nextPlan: string, nextTurns: Turn[]) {
     setLoading(true);
@@ -42,6 +48,7 @@ export default function BusinessRiskCheck() {
       setQuestion(data.kind === "question" ? data.question : null);
       setReport(data.kind === "report" ? data.report : null);
       setNotice(data.kind === "out_of_scope" ? data.message : null);
+      if (data.kind === "report") addHistory({ kind: "business", input: nextPlan, turns: nextTurns, report: data.report });
       return true;
     } catch {
       setError(MESSAGES.aiError);
@@ -67,6 +74,40 @@ export default function BusinessRiskCheck() {
     if (ok) setAnswer("");
   }
 
+  /** nice 기능: 사업계획서 파일에서 글자를 뽑아 입력칸에 넣는다 (파일은 서버로 보내지 않는다) */
+  async function loadFile(file: File | undefined) {
+    if (!file) return;
+    setReading(true);
+    setError(null);
+    setFileNote(null);
+    try {
+      const text = await extractFileText(file);
+      const cut = text.length > MAX_INPUT_LENGTH;
+      setDraft(cut ? text.slice(0, MAX_INPUT_LENGTH) : text);
+      setFileNote(
+        cut
+          ? `"${file.name}"에서 글자를 가져왔어요. 5,000자가 넘어 앞부분만 넣었으니 핵심 내용이 들어갔는지 확인해 주세요.`
+          : `"${file.name}"에서 글자를 가져왔어요. 개인정보·대외비 내용이 없는지 확인한 뒤 검토하기를 눌러 주세요.`
+      );
+    } catch (err) {
+      if (!(err instanceof FileTextError)) console.warn("[준법 콕] 파일 읽기 실패:", err instanceof Error ? err.message : err);
+      setError(err instanceof FileTextError ? err.message : "파일을 읽지 못했어요. 내용을 직접 적어 주세요");
+    } finally {
+      setReading(false);
+      if (fileInput.current) fileInput.current.value = "";
+    }
+  }
+
+  function openHistory(entry: HistoryEntry) {
+    if (entry.kind !== "business") return;
+    setPlan(entry.input);
+    setTurns(entry.turns);
+    setQuestion(null);
+    setReport(entry.report);
+    setNotice(null);
+    setError(null);
+  }
+
   function reset() {
     setDraft("");
     setPlan(null);
@@ -76,6 +117,7 @@ export default function BusinessRiskCheck() {
     setReport(null);
     setNotice(null);
     setError(null);
+    setFileNote(null);
   }
 
   const started = plan !== null;
@@ -94,6 +136,25 @@ export default function BusinessRiskCheck() {
             사업계획을 적어 주세요
           </label>
           <p className="text-sm text-muted">사업 목적·대상·예산·계약 방식을 함께 적으면 바로 검토합니다.</p>
+          <div className="flex flex-wrap items-center gap-2">
+            <input
+              ref={fileInput}
+              id="business-plan-file"
+              type="file"
+              accept={ACCEPTED_FILE_TYPES}
+              className="sr-only"
+              onChange={(event) => void loadFile(event.target.files?.[0])}
+            />
+            <label
+              htmlFor="business-plan-file"
+              className={`cursor-pointer rounded-lg border border-border px-3 py-1.5 text-sm hover:border-accent ${reading ? "pointer-events-none opacity-50" : ""}`}
+            >
+              📎 사업계획서 파일 불러오기
+            </label>
+            <span className="text-xs text-muted">PDF·한글(HWP)·TXT, 10MB 이하 · 글자만 이 브라우저에서 꺼내 입력칸에 넣습니다</span>
+          </div>
+          {reading && <p className="text-xs text-muted">파일을 읽는 중입니다…</p>}
+          {fileNote && <p className="rounded-lg border border-border px-3 py-2 text-xs">{fileNote}</p>}
           <textarea
             id="business-plan"
             value={draft}
@@ -106,13 +167,14 @@ export default function BusinessRiskCheck() {
           <p className="text-xs text-muted">{MESSAGES.businessPrivacyNotice}</p>
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading || reading}
             className="self-end rounded-lg bg-accent px-5 py-2 font-semibold text-accent-foreground disabled:opacity-50"
           >
             검토하기
           </button>
         </form>
       )}
+      {!started && <RecentHistory kind="business" onOpen={openHistory} />}
 
       {started && (
         <section aria-label="사업계획" className="flex flex-col gap-3 rounded-xl border border-border bg-card p-5">
@@ -125,7 +187,7 @@ export default function BusinessRiskCheck() {
             </p>
           ))}
           {question && (
-            <div className="flex flex-col gap-2 rounded-lg border border-accent p-3">
+            <div className="flex flex-col gap-2 rounded-lg border border-accent p-3 print:hidden">
               <p className="font-medium">🤖 {question}</p>
               <form
                 className="flex flex-col gap-2 sm:flex-row"
@@ -175,7 +237,7 @@ export default function BusinessRiskCheck() {
       {report && <RiskReportView report={report} />}
 
       {started && !loading && (report || notice) && (
-        <button type="button" onClick={reset} className="self-center rounded-lg border border-border px-5 py-2 hover:border-accent">
+        <button type="button" onClick={reset} className="self-center rounded-lg border border-border px-5 py-2 hover:border-accent print:hidden">
           새로 검토하기
         </button>
       )}
