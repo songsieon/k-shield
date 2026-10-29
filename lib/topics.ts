@@ -15,7 +15,7 @@ export const INTEGRITY_TOPICS: Topic[] = [
   {
     id: "gift",
     label: "선물·금품·식사",
-    keywords: ["선물", "금품", "상품권", "기프티콘", "카카오톡", "모바일", "식사", "밥", "음식", "저녁", "점심", "회식", "술", "커피", "접대", "향응", "골프", "경조사", "축의", "조의", "화환", "명절", "현금", "돈", "받았", "보냈", "보내", "줬", "주었", "세트", "홍삼", "과일", "꽃"],
+    keywords: ["선물", "금품", "상품권", "기프티콘", "카카오톡", "모바일", "식사", "밥", "음식", "저녁", "점심", "회식", "술", "커피", "접대", "향응", "골프", "경조사", "축의", "조의", "화환", "명절", "현금", "돈", "받았", "보냈", "보내", "줬", "주었", "세트", "홍삼", "과일", "꽃", "포상", "상금", "격려", "위로", "상사", "팀장", "상급자", "하급자", "부하", "팀원", "성과급", "경연", "공모전", "수상", "기념품"],
     refs: [
       ["law-cheongtak", "제2조"], ["law-cheongtak", "제8조"], ["law-cheongtak", "제9조"], ["law-cheongtak", "제22조"], ["law-cheongtak", "제23조"],
       ["law-cheongtak-decree", "제17조"], ["law-cheongtak-decree", "제18조"], ["law-cheongtak-decree", "[별표 1]"],
@@ -27,9 +27,10 @@ export const INTEGRITY_TOPICS: Topic[] = [
   {
     id: "lecture",
     label: "외부강의·기고",
-    keywords: ["강의", "강연", "기고", "세미나", "발표", "토론", "사례금", "원고료", "출강", "강사"],
+    keywords: ["강의", "강연", "기고", "세미나", "발표", "토론", "사례금", "원고료", "출강", "강사", "패널", "집필", "특강", "출연", "방송", "인터뷰"],
     refs: [
       ["law-cheongtak", "제10조"],
+      ["law-conflict", "제10조"], ["rule-conflict-of-interest", "제6조"],
       ["law-cheongtak-decree", "제25조"], ["law-cheongtak-decree", "제26조"], ["law-cheongtak-decree", "제27조"], ["law-cheongtak-decree", "[별표 2]"],
       ["rule-code-of-conduct", "제35조의2"], ["rule-code-of-conduct", "제35조의3"], ["rule-code-of-conduct", "[별표 2]"],
       ["ref-report-channels", "4."],
@@ -38,10 +39,11 @@ export const INTEGRITY_TOPICS: Topic[] = [
   {
     id: "outside",
     label: "직무 관련 외부활동",
-    keywords: ["외부활동", "겸직", "자문", "위원", "이사", "취임", "대리", "부업", "컨설팅"],
+    keywords: ["외부활동", "겸직", "자문", "위원", "이사", "취임", "대리", "부업", "컨설팅", "고문", "자문료", "노무", "용역 제공", "정보 제공", "외국"],
     refs: [
       ["law-conflict", "제10조"],
       ["rule-conflict-of-interest", "제6조"],
+      ["law-cheongtak", "제10조"], ["rule-code-of-conduct", "제35조의2"], ["rule-code-of-conduct", "[별표 2]"],
       ["ref-report-channels", "5."],
     ],
   },
