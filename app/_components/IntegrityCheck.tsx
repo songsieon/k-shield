@@ -126,7 +126,7 @@ export default function IntegrityCheck() {
             어떤 상황인가요?
           </label>
           <div className="flex flex-col gap-1.5">
-            <span className="text-xs text-muted">자주 묻는 상황을 누르면 적을 내용의 틀이 들어갑니다</span>
+            <span className="text-xs text-muted">자주 묻는 상황을 누르면 적을 내용의 틀이 들어갑니다.</span>
             <div className="flex flex-wrap gap-1.5">
               {CHECK_ITEMS.map((item) => (
                 <button

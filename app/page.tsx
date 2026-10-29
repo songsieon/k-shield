@@ -34,7 +34,7 @@ export default function Home() {
       </main>
 
       <footer className="mt-auto border-t border-border pt-4 text-xs text-muted">
-        근거 데이터 기준일 {getDataDate()} · 일부 내규는 실습용 가상 문서입니다
+        근거 데이터 기준일 {getDataDate()} · 일부 내규는 실습용 가상 문서입니다.
       </footer>
     </div>
   );
