@@ -19,7 +19,7 @@ import { verifyRefs } from "./verify";
 const CHANNELS_DOC = "ref-report-channels";
 
 /** 사용자가 확인해 준 경로 단계 (ref-report-channels의 [확정] 항목). 이 밖의 단계가 섞이면 [예시]로 본다. */
-const CONFIRMED_PATH_STEPS = ["K-Wings", "K-Wings 메인 화면", "메인 화면", "클린신고센터", "K-Hopes"];
+const CONFIRMED_PATH_STEPS = ["K-Wings", "K-Wings 메인 화면", "메인 화면", "클린신고센터", "K-Hopes", "외부강의등 신고", "직무 관련 외부활동 허가", "직무관련 외부활동 허가"];
 
 function pathStatusOf(text: string): "확정" | "예시" {
   const steps = text.split(/→|>/).map((step) => step.replace(/[[\]'"]/g, "").trim()).filter(Boolean);
