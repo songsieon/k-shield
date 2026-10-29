@@ -2,17 +2,17 @@
 
 export const MESSAGES = {
   waiting: "검토 중입니다…",
-  aiError: "잠시 후 다시 시도해 주세요",
+  aiError: "잠시 후 다시 시도해 주세요.",
   outOfScope: "K-SHIELD는 법령·청렴·윤리 점검만 도와드립니다.",
-  noEvidence: "근거를 찾지 못했습니다. 청렴·윤리 담당 부서에 확인하세요",
-  conflict: "서로 다르게 정해져 있으니 담당 부서에 확인하세요",
-  privacyDetected: "개인정보가 포함돼 있어요",
-  privacyNotice: "개인정보를 입력하지 마세요. 상대방은 'A업체 담당자'처럼 적어 주세요",
-  businessPrivacyNotice: "개인정보와 대외비 내용은 빼고 입력해 주세요",
-  externalAiNotice: "입력한 내용은 답변을 만들기 위해 외부 AI 서비스로 전송됩니다",
+  noEvidence: "근거를 찾지 못했습니다. 청렴·윤리 담당 부서에 확인하세요.",
+  conflict: "서로 다르게 정해져 있으니 담당 부서에 확인하세요.",
+  privacyDetected: "개인정보가 포함돼 있어요.",
+  privacyNotice: "개인정보를 입력하지 마세요. 상대방은 'A업체 담당자'처럼 적어 주세요.",
+  businessPrivacyNotice: "개인정보와 대외비 내용은 빼고 입력해 주세요.",
+  externalAiNotice: "입력한 내용은 답변을 만들기 위해 외부 AI 서비스로 전송됩니다.",
   referenceOnly: "결과는 사전 점검을 위한 참고용으로만 활용하여 주시기 바랍니다.",
-  emptyInput: "내용을 입력해 주세요",
-  tooLongInput: "입력이 너무 깁니다. 5,000자 이내로 줄여 주세요",
+  emptyInput: "내용을 입력해 주세요.",
+  tooLongInput: "입력이 너무 깁니다. 5,000자 이내로 줄여 주세요.",
 } as const;
 
 /** 한 번에 받을 수 있는 입력 길이 (과도한 요청 방지) */
