@@ -7,7 +7,10 @@
   --card: #ffffff;
   --muted: #5f6673;
   --border: #e2e5ea;
-  --accent: #1f5fbf;
+  /* 캠코 CI: 메인 블루 RGB 9·31·95, 서브 레드 RGB 255·0·80 */
+  --accent: #091f5f;
+  --brand-red: #ff0050;
+  --hero-key: #ff7a9f;
   --accent-foreground: #ffffff;
   --hero-tint: #e8f1fd;
   --notice: #fff7e0;
@@ -40,6 +43,8 @@
   --color-muted: var(--muted);
   --color-border: var(--border);
   --color-accent: var(--accent);
+  --color-brand-red: var(--brand-red);
+  --color-hero-key: var(--hero-key);
   --color-accent-foreground: var(--accent-foreground);
   --color-notice: var(--notice);
   --color-notice-foreground: var(--notice-foreground);
@@ -67,7 +72,7 @@
     --card: #181b21;
     --muted: #a0a7b4;
     --border: #2b3039;
-    --accent: #6ea2f0;
+    --accent: #8fa8ef;
     --accent-foreground: #0f1115;
     --hero-tint: #1b2535;
     --notice: #3a3115;
@@ -123,7 +128,9 @@ body {
 
 /* 마스코트로 꾸미기: 머리 카드 배경과 살짝 떠오르는 움직임 */
 .hero-card {
-  background: linear-gradient(135deg, var(--card) 0%, var(--hero-tint) 100%);
+  background:
+    radial-gradient(circle at 85% 20%, rgba(255, 0, 80, 0.22), transparent 45%),
+    linear-gradient(135deg, #091f5f 0%, #14388f 100%);
 }
 
 @keyframes mascot-bob {

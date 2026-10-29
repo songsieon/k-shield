@@ -19,20 +19,21 @@ function getDataDate(): string {
 export default function Home() {
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-5 px-4 py-8">
-      <header className="hero-card flex items-center gap-3 rounded-2xl border border-border p-4 sm:gap-5 sm:p-5">
-        <div className="flex min-w-0 flex-1 flex-col gap-1">
-        <h1 className="text-2xl font-bold">K-SHIELD</h1>
-        <p className="text-sm font-medium tracking-wide text-muted">
-          <b className="text-accent">K</b>AMCO <b className="text-accent">S</b>mart <b className="text-accent">H</b>elp for <b className="text-accent">I</b>ntegrity,{" "}
-          <b className="text-accent">E</b>thics, <b className="text-accent">L</b>aw &amp; <b className="text-accent">D</b>ecisions
-        </p>
-        <p className="text-muted">부패방지 법령·내규 준수 여부와 사업 수행의 법령 위반 및 윤리적 리스크를 간편하게, 미리 점검하세요.</p>
-      </div>
-        <div className="flex shrink-0 items-end -space-x-3 print:hidden" aria-hidden="true">
-          <Mascot name="dog" size={64} className="mascot-bob h-12 w-12 sm:h-16 sm:w-16" />
-          <Mascot name="bunny" size={72} className="mascot-bob mascot-delay-1 z-10 h-14 w-14 sm:h-[4.5rem] sm:w-[4.5rem]" />
-          <Mascot name="green" size={64} className="mascot-bob mascot-delay-2 h-12 w-12 sm:h-16 sm:w-16" />
+      <header className="hero-card relative flex items-center gap-3 overflow-hidden rounded-3xl p-5 pb-6 text-white shadow-lg sm:gap-6 sm:p-7 sm:pb-8">
+        <div className="flex min-w-0 flex-1 flex-col gap-2">
+          <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">K-SHIELD</h1>
+          <p className="text-sm font-medium tracking-wide text-white/80">
+            <b className="text-hero-key">K</b>AMCO <b className="text-hero-key">S</b>mart <b className="text-hero-key">H</b>elp for <b className="text-hero-key">I</b>ntegrity,{" "}
+            <b className="text-hero-key">E</b>thics, <b className="text-hero-key">L</b>aw &amp; <b className="text-hero-key">D</b>ecisions
+          </p>
+          <p className="text-sm leading-6 text-white/90 sm:text-base">부패방지 법령·내규 준수 여부와 사업 수행의 법령 위반 및 윤리적 리스크를 간편하게, 미리 점검하세요.</p>
         </div>
+        <div className="flex shrink-0 items-end -space-x-4 print:hidden" aria-hidden="true">
+          <Mascot name="dog" size={96} className="mascot-bob h-14 w-14 drop-shadow-lg sm:h-24 sm:w-24" />
+          <Mascot name="bunny" size={112} className="mascot-bob mascot-delay-1 z-10 h-16 w-16 drop-shadow-lg sm:h-28 sm:w-28" />
+          <Mascot name="green" size={96} className="mascot-bob mascot-delay-2 h-14 w-14 drop-shadow-lg sm:h-24 sm:w-24" />
+        </div>
+        <div className="absolute inset-x-0 bottom-0 h-1.5 bg-brand-red" aria-hidden="true" />
       </header>
 
       <NoticeBar />
