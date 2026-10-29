@@ -3,6 +3,7 @@
 import { useSyncExternalStore } from "react";
 
 import { clearHistory, getHistory, getServerHistory, subscribeHistory, type HistoryEntry } from "@/lib/history";
+import { overallRiskSignal, SIGNAL_EMOJI, verdictSignal } from "@/lib/signal";
 
 // nice 기능: 최근 점검 기록 (이 브라우저에만 저장, 최대 10개)
 
@@ -35,7 +36,10 @@ export default function RecentHistory({ kind, onOpen }: RecentHistoryProps) {
             >
               <span className="min-w-0 truncate">{entry.title}</span>
               <span className="flex shrink-0 items-center gap-2 text-xs text-muted">
-                <span className="rounded-full border border-border px-2 py-0.5">{entry.label}</span>
+                <span className="rounded-full border border-border px-2 py-0.5">
+                  {SIGNAL_EMOJI[entry.kind === "integrity" ? verdictSignal(entry.result.verdict) : overallRiskSignal(entry.report).signal]}{" "}
+                  {entry.label}
+                </span>
                 {new Date(entry.createdAt).toLocaleDateString("ko-KR", { month: "numeric", day: "numeric" })}
               </span>
             </button>

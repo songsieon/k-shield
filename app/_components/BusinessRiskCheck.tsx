@@ -11,7 +11,7 @@ import type { BusinessRiskResponse, ErrorBody, RiskReport, Turn } from "@/lib/ty
 import RecentHistory from "./RecentHistory";
 import RiskReportView from "./RiskReportView";
 
-// Design Ref: §8.3, §5.2 — 사업 리스크 콕! 화면. 사업계획과 추가 답은 브라우저에만 두고 매번 함께 보낸다.
+// Design Ref: §8.3, §5.2 — 사업리스크 신호등 화면. 사업계획과 추가 답은 브라우저에만 두고 매번 함께 보낸다.
 
 const DONT_KNOW = "미정이에요";
 
@@ -90,7 +90,7 @@ export default function BusinessRiskCheck() {
           : `"${file.name}"에서 글자를 가져왔어요. 개인정보·대외비 내용이 없는지 확인한 뒤 검토하기를 눌러 주세요.`
       );
     } catch (err) {
-      if (!(err instanceof FileTextError)) console.warn("[준법 콕] 파일 읽기 실패:", err instanceof Error ? err.message : err);
+      if (!(err instanceof FileTextError)) console.warn("[준법 신호등] 파일 읽기 실패:", err instanceof Error ? err.message : err);
       setError(err instanceof FileTextError ? err.message : "파일을 읽지 못했어요. 내용을 직접 적어 주세요");
     } finally {
       setReading(false);

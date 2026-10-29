@@ -1,25 +1,36 @@
-import type { RiskLevel, RiskReport } from "@/lib/types";
+import { levelSignal, overallRiskSignal, SIGNAL_NAME, type Signal } from "@/lib/signal";
+import type { RiskReport } from "@/lib/types";
 
 import EvidenceList from "./EvidenceList";
 import PrintButton from "./PrintButton";
+import SignalLight from "./SignalLight";
 
-// Design Ref: §8.3 — 리스크 검토 보고서: 전문가별 쟁점(위험요소 → 근거 → 위험 수준 → 개선 권고) → 추가 확인 필요 사항
+// Design Ref: §8.3 — 리스크 검토 보고서: 종합 신호 → 전문가별 쟁점(위험요소 → 근거 → 위험 수준(신호) → 개선 권고) → 추가 확인 필요 사항
+// 쟁점마다 상=빨강, 중=노랑, 하=초록. 종합 신호는 상이 1개 이상이면 빨강, 중이 있으면 노랑, 모두 하이면 초록.
 
-const LEVEL_STYLE: Record<RiskLevel, string> = {
-  상: "bg-risk-high",
-  중: "bg-risk-mid",
-  하: "bg-risk-low",
+const BADGE_STYLE: Record<Signal, string> = {
+  green: "bg-signal-green text-signal-green-fg",
+  yellow: "bg-signal-yellow text-signal-yellow-fg",
+  red: "bg-signal-red text-signal-red-fg",
 };
 
 export default function RiskReportView({ report }: { report: RiskReport }) {
   const total = report.experts.reduce((n, e) => n + e.issues.length, 0);
   const high = report.experts.reduce((n, e) => n + e.issues.filter((i) => i.level === "상").length, 0);
+  const overall = overallRiskSignal(report);
 
   return (
     <article className="flex flex-col gap-5">
       <header className="flex flex-wrap items-start justify-between gap-3 rounded-xl border border-border bg-card px-5 py-4">
-        <div>
+        <div className="flex flex-col gap-2">
           <h2 className="text-lg font-bold">리스크 검토 보고서</h2>
+          <div className="flex flex-wrap items-center gap-3">
+            <SignalLight signal={overall.signal} />
+            <span className={`signal-badge rounded-full px-3 py-1 text-sm font-bold ${BADGE_STYLE[overall.signal]}`}>
+              종합 신호 · {SIGNAL_NAME[overall.signal]}
+            </span>
+            <span className="text-sm">{overall.text}</span>
+          </div>
           <p className="text-sm text-muted">
             쟁점 {total}개 (위험 수준 상 {high}개) · 추가 확인 필요 {report.followUps.length}건
           </p>
@@ -50,7 +61,9 @@ export default function RiskReportView({ report }: { report: RiskReport }) {
                 <div className="flex flex-col gap-1">
                   <span className="text-xs font-semibold text-muted">3) 위험 수준</span>
                   <p className="flex flex-wrap items-center gap-2 leading-6">
-                    <span className={`rounded-full px-2.5 py-0.5 text-sm font-bold text-white ${LEVEL_STYLE[issue.level]}`}>{issue.level}</span>
+                    <span className={`signal-badge rounded-full px-2.5 py-0.5 text-sm font-bold ${BADGE_STYLE[levelSignal(issue.level)]}`}>
+                      {SIGNAL_NAME[levelSignal(issue.level)]} · {issue.level}
+                    </span>
                     <span>{issue.reason}</span>
                   </p>
                 </div>

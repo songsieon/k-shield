@@ -20,7 +20,7 @@ function reasoningEffort(): Reasoning {
 
 /**
  * AI 호출 하나의 시간 제한. SDK가 실패한 호출을 1번 다시 시도하므로 한 번 묻는 데 최대 100초.
- * 청렴 콕!은 최악의 경우 판단(모양 오류로 한 번 더) 200초 + 재검토 100초 = 300초로, route의 maxDuration(300초) 안에 든다.
+ * 청렴 신호등은 최악의 경우 판단(모양 오류로 한 번 더) 200초 + 재검토 100초 = 300초로, route의 maxDuration(300초) 안에 든다.
  */
 const TIMEOUT_MS = 50_000;
 

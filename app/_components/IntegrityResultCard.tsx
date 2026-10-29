@@ -1,15 +1,17 @@
 import { MESSAGES } from "@/lib/messages";
-import type { ActionKind, IntegrityResult, RequirementStatus, Verdict } from "@/lib/types";
+import { SIGNAL_NAME, verdictSignal, type Signal } from "@/lib/signal";
+import type { ActionKind, IntegrityResult, RequirementStatus } from "@/lib/types";
 
 import EvidenceList from "./EvidenceList";
+import SignalLight from "./SignalLight";
 
-// Design Ref: §8.2 — 청렴 콕! 결과 카드: 단계 → 요약 → 예외 요건표 → 금액 비교 → 해야 할 일 → 확인할 것 → 근거
+// Design Ref: §8.2 — 청렴 신호등 결과 카드: 신호등 → 단계 → 요약 → 예외 요건표 → 금액 비교 → 해야 할 일 → 확인할 것 → 근거
+// 내부 판정은 4단계 그대로이고, 화면에는 신호 3색(초록·노랑·빨강)으로 함께 보여 준다. 노랑은 "위반 가능성 있음"과 "확인 필요"를 글자로 구분한다.
 
-const VERDICT_STYLE: Record<Verdict, string> = {
-  문제없음: "bg-verdict-ok",
-  "위반 가능성 있음": "bg-verdict-caution",
-  "위반 소지 높음": "bg-verdict-danger",
-  "확인 필요": "bg-verdict-check",
+const BADGE_STYLE: Record<Signal, string> = {
+  green: "bg-signal-green text-signal-green-fg",
+  yellow: "bg-signal-yellow text-signal-yellow-fg",
+  red: "bg-signal-red text-signal-red-fg",
 };
 
 const STATUS_STYLE: Record<RequirementStatus, string> = {
@@ -23,12 +25,16 @@ const ACTION_ORDER: ActionKind[] = ["법령 조치", "사내 절차", "시스템
 const won = (value: number) => `${value.toLocaleString("ko-KR")}원`;
 
 export default function IntegrityResultCard({ result }: { result: IntegrityResult }) {
+  const signal = verdictSignal(result.verdict);
   return (
     <article className="flex flex-col gap-5 rounded-xl border border-border bg-card p-5">
       <header className="flex flex-col gap-3">
-        <span className={`self-start rounded-full px-3 py-1 text-sm font-bold text-white ${VERDICT_STYLE[result.verdict]}`}>
-          {result.verdict}
-        </span>
+        <div className="flex flex-wrap items-center gap-3">
+          <SignalLight signal={signal} />
+          <span className={`signal-badge rounded-full px-3 py-1 text-sm font-bold ${BADGE_STYLE[signal]}`}>
+            {SIGNAL_NAME[signal]} 신호 · {result.verdict}
+          </span>
+        </div>
         <p className="leading-7">{result.summary}</p>
         {result.conflict && (
           <p className="rounded-lg border border-verdict-caution px-3 py-2 text-sm">⚖️ 법령과 내규가 {MESSAGES.conflict}</p>

@@ -54,7 +54,7 @@ async function post(api, body) {
   return { status: res.status, json, sec: (Date.now() - started) / 1000 };
 }
 
-/** 청렴 콕!: 질문이 오면 준비한 답을 순서대로 보내고, 결과가 나오면 돌려준다 */
+/** 청렴 신호등: 질문이 오면 준비한 답을 순서대로 보내고, 결과가 나오면 돌려준다 */
 async function runIntegrity(item) {
   const turns = [];
   for (let step = 0; step <= MAX_QUESTIONS; step++) {
@@ -66,7 +66,7 @@ async function runIntegrity(item) {
   return { error: "질문이 끝나지 않음", sec: 0, turns: turns.length };
 }
 
-/** 사업 리스크 콕!: 필수 정보 질문이 오면 준비한 답 또는 "미정"으로 답한다 */
+/** 사업리스크 신호등: 필수 정보 질문이 오면 준비한 답 또는 "미정"으로 답한다 */
 async function runBusinessRisk(item) {
   const turns = [];
   for (let step = 0; step <= 4; step++) {
@@ -88,7 +88,7 @@ for (const item of questions.integrity) {
   rows.push({
     id: item.id,
     title: item.title,
-    feature: "청렴 콕!",
+    feature: "청렴 신호등",
     answered: Boolean(result),
     ok: refs.some((ref) => item.expected.some((exp) => matches(ref, exp))),
     hasEvidence: refs.length > 0,
@@ -114,7 +114,7 @@ for (const item of questions.businessRisk) {
   rows.push({
     id: item.id,
     title: item.title,
-    feature: "사업 리스크 콕!",
+    feature: "사업리스크 신호등",
     answered: Boolean(report),
     ok: refs.some((ref) => item.expected.some((exp) => matches(ref, exp))),
     hasEvidence: issues.length > 0 && issues.every((i) => i.evidence.length > 0),
@@ -137,10 +137,10 @@ const phraseChecks = [];
 if (!only.size) {
   const privacy1 = await post("integrity", { situation: "업체 담당자 010-1234-5678이 선물을 보냈어요" });
   const privacy2 = await post("business-risk", { plan: "주민번호 900101-1234567인 직원이 담당하는 사업입니다" });
-  privacyChecks.push(["청렴 콕!", privacy1.status === 400 && privacy1.json.error?.code === "PRIVACY"]);
-  privacyChecks.push(["사업 리스크 콕!", privacy2.status === 400 && privacy2.json.error?.code === "PRIVACY"]);
+  privacyChecks.push(["청렴 신호등", privacy1.status === 400 && privacy1.json.error?.code === "PRIVACY"]);
+  privacyChecks.push(["사업리스크 신호등", privacy2.status === 400 && privacy2.json.error?.code === "PRIVACY"]);
   const off = await post("integrity", { situation: "오늘 점심 메뉴 추천해 주세요" });
-  phraseChecks.push(["무관 질문 (API 응답)", off.json.kind === "out_of_scope" && off.json.message === "준법 콕은 법령·청렴·윤리 점검만 도와드립니다."]);
+  phraseChecks.push(["무관 질문 (API 응답)", off.json.kind === "out_of_scope" && off.json.message === "준법 신호등은 법령·청렴·윤리 점검만 도와드립니다."]);
   for (const phrase of ["검토 중입니다…", "잠시 후 다시 시도해 주세요", "근거를 찾지 못했습니다. 청렴·윤리 담당 부서에 확인하세요"]) {
     phraseChecks.push([phrase, messages.includes(phrase)]);
   }
@@ -150,7 +150,7 @@ if (!only.size) {
 const pct = (n, d) => (d ? `${Math.round((n / d) * 100)}%` : "-");
 const total = rows.length;
 const correct = rows.filter((r) => r.ok).length;
-// 근거 표시율의 분모는 "결과가 나온 응답"(청렴 콕! 결과·사업 리스크 콕! 보고서). "근거를 찾지 못했습니다" 결과는 실패로 센다.
+// 근거 표시율의 분모는 "결과가 나온 응답"(청렴 신호등 결과·사업리스크 신호등 보고서). "근거를 찾지 못했습니다" 결과는 실패로 센다.
 const answered = rows.filter((r) => r.answered);
 const shown = answered.filter((r) => r.hasEvidence).length;
 const fakes = rows.flatMap((r) => r.fake);
@@ -158,13 +158,13 @@ const timeRate = (feature) => {
   const list = rows.filter((r) => r.feature === feature);
   return { n: list.filter((r) => r.sec <= r.limit).length, d: list.length, max: Math.max(0, ...list.map((r) => r.sec)) };
 };
-const t1 = timeRate("청렴 콕!");
-const t2 = timeRate("사업 리스크 콕!");
+const t1 = timeRate("청렴 신호등");
+const t2 = timeRate("사업리스크 신호등");
 
 console.log("\n\n문항별 결과");
 for (const r of rows) {
   console.log(
-    `${r.ok && !r.dangerous ? "✅" : "❌"} ${r.id} ${r.title} | ${r.verdict}${r.dangerous ? " ⚠️ 위험한 오판" : r.feature === "청렴 콕!" && !r.verdictOk ? " (예상 단계와 다름)" : ""} | 질문 ${r.turns}개 | ${r.sec.toFixed(1)}초`
+    `${r.ok && !r.dangerous ? "✅" : "❌"} ${r.id} ${r.title} | ${r.verdict}${r.dangerous ? " ⚠️ 위험한 오판" : r.feature === "청렴 신호등" && !r.verdictOk ? " (예상 단계와 다름)" : ""} | 질문 ${r.turns}개 | ${r.sec.toFixed(1)}초`
   );
   if (!r.ok) console.log(`   근거: ${r.refs.join(" | ") || "(없음)"}`);
 }
@@ -173,8 +173,8 @@ console.log("\n성공 기준");
 console.log(`1. 근거 정확도      ${pct(correct, total)} (${correct}/${total}) — 목표 90% 이상 ${correct / total >= 0.9 ? "✅" : "❌"}`);
 console.log(`2. 근거 표시율      ${pct(shown, answered.length)} (${shown}/${answered.length}, 결과가 나온 응답 기준) — 목표 100% ${answered.length && shown === answered.length ? "✅" : "❌"}`);
 console.log(`3. 지어낸 조문      ${fakes.length}건 — 목표 0건 ${fakes.length === 0 ? "✅" : "❌"}`);
-if (t1.d) console.log(`4. 청렴 콕! 30초 이내   ${pct(t1.n, t1.d)} (최대 ${t1.max.toFixed(1)}초) — 목표 90% 이상 ${t1.n / t1.d >= 0.9 ? "✅" : "❌"}`);
-if (t2.d) console.log(`5. 사업 리스크 콕! 3분 이내 ${pct(t2.n, t2.d)} (최대 ${t2.max.toFixed(1)}초) — 목표 90% 이상 ${t2.n / t2.d >= 0.9 ? "✅" : "❌"}`);
+if (t1.d) console.log(`4. 청렴 신호등 30초 이내   ${pct(t1.n, t1.d)} (최대 ${t1.max.toFixed(1)}초) — 목표 90% 이상 ${t1.n / t1.d >= 0.9 ? "✅" : "❌"}`);
+if (t2.d) console.log(`5. 사업리스크 신호등 3분 이내 ${pct(t2.n, t2.d)} (최대 ${t2.max.toFixed(1)}초) — 목표 90% 이상 ${t2.n / t2.d >= 0.9 ? "✅" : "❌"}`);
 if (privacyChecks.length) {
   const ok = privacyChecks.every(([, pass]) => pass);
   console.log(`6. 개인정보 차단    ${privacyChecks.map(([name, pass]) => `${name} ${pass ? "✅" : "❌"}`).join(" · ")} — 목표 100% ${ok ? "✅" : "❌"}`);
@@ -186,6 +186,6 @@ if (phraseChecks.length) {
 }
 console.log("8. 빌드 품질       (npm run lint · npm run build로 따로 확인)");
 const dangerous = rows.filter((r) => r.dangerous);
-console.log(`9. 위험한 오판      ${dangerous.length}건 (청렴 콕! 대상) — 목표 0건 ${dangerous.length === 0 ? "✅" : "❌"}${dangerous.length ? " (" + dangerous.map((r) => r.id).join(", ") + ")" : ""}`);
-const verdictRows = rows.filter((r) => r.feature === "청렴 콕!");
-if (verdictRows.length) console.log(`(참고) 청렴 콕! 결과 단계가 예상과 맞음: ${pct(verdictRows.filter((r) => r.verdictOk).length, verdictRows.length)}`);
+console.log(`9. 위험한 오판      ${dangerous.length}건 (청렴 신호등 대상) — 목표 0건 ${dangerous.length === 0 ? "✅" : "❌"}${dangerous.length ? " (" + dangerous.map((r) => r.id).join(", ") + ")" : ""}`);
+const verdictRows = rows.filter((r) => r.feature === "청렴 신호등");
+if (verdictRows.length) console.log(`(참고) 청렴 신호등 결과 단계가 예상과 맞음: ${pct(verdictRows.filter((r) => r.verdictOk).length, verdictRows.length)}`);

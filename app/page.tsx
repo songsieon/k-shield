@@ -19,7 +19,7 @@ export default function Home() {
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-5 px-4 py-8">
       <header className="flex flex-col gap-1">
-        <h1 className="text-2xl font-bold">캠코 준법 콕</h1>
+        <h1 className="text-2xl font-bold">캠코 준법 신호등</h1>
         <p className="text-muted">청렴·윤리 리스크를 법령·내규 근거로 미리 점검하세요</p>
       </header>
 

@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "캠코 준법 콕",
+  title: "캠코 준법 신호등",
   description: "캠코 임직원의 청렴·윤리 리스크를 법령·내규 근거로 미리 점검하는 서비스",
 };
 

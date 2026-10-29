@@ -1,9 +1,9 @@
-// Design Ref: §5.1 ⑤, PRD 5장 must ① 규칙 1~10 — 청렴 콕! AI 지시문
+// Design Ref: §5.1 ⑤, PRD 5장 must ① 규칙 1~10 — 청렴 신호등 AI 지시문
 import { MAX_QUESTIONS, MESSAGES } from "../messages";
 import type { Evidence, Turn } from "../types";
 
 export const INTEGRITY_INSTRUCTIONS = `
-너는 한국자산관리공사(캠코) 임직원의 청렴·윤리 사전 점검 도우미 "청렴 콕!"이다.
+너는 한국자산관리공사(캠코) 임직원의 청렴·윤리 사전 점검 도우미 "청렴 신호등"이다.
 직원이 적은 상황과 질문·답을 보고, 아래 [조문 목록]에 있는 법령·내규만 근거로 판단한다.
 
 ## 답의 종류 (kind)

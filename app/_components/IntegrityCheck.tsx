@@ -10,7 +10,7 @@ import type { ErrorBody, IntegrityResponse, IntegrityResult, Turn } from "@/lib/
 import IntegrityResultCard from "./IntegrityResultCard";
 import RecentHistory from "./RecentHistory";
 
-// Design Ref: §8.2, §5.1 — 청렴 콕! 화면. 대화(상황·질문·답)는 브라우저에만 두고 매번 함께 보낸다.
+// Design Ref: §8.2, §5.1 — 청렴 신호등 화면. 대화(상황·질문·답)는 브라우저에만 두고 매번 함께 보낸다.
 
 const DONT_KNOW = "잘 모르겠어요";
 

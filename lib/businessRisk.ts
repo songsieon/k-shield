@@ -1,4 +1,4 @@
-// Design Ref: §5.2 — 사업 리스크 콕! 처리 순서: 필수 정보 확인 → 전문가 4명 동시 검토 → 보고서 점검
+// Design Ref: §5.2 — 사업리스크 신호등 처리 순서: 필수 정보 확인 → 전문가 4명 동시 검토 → 보고서 점검
 import "server-only";
 
 import { askStructured } from "./ai";
@@ -64,7 +64,7 @@ async function reviewAsExpert(scope: ExpertScope, plan: string, turns: BusinessR
   const followUps: RiskReport["followUps"] = [];
   for (const issue of answer.issues.slice(0, MAX_ISSUES)) {
     const { evidence, dropped } = verifyRefs(issue.evidenceRefs, allowed, 3);
-    if (dropped.length) console.warn(`[준법 콕] 데이터에 없는 근거 제외(${scope.role}): ${dropped.join(" | ")}`);
+    if (dropped.length) console.warn(`[준법 신호등] 데이터에 없는 근거 제외(${scope.role}): ${dropped.join(" | ")}`);
     const relatedLaws = outsideLaws(issue.relatedLaws);
     const headline = firstSentence(issue.risk);
     if (evidence.length === 0) {

@@ -5,8 +5,8 @@ import { useState, type ReactNode } from "react";
 // Design Ref: §8.1 — 탭 2개. 탭을 바꿔도 입력·대화가 사라지지 않도록 두 패널을 모두 그려 두고 숨기기만 한다.
 
 const TABS = [
-  { id: "integrity", label: "청렴 콕!", description: "내 행동이 기준에 맞는지 점검" },
-  { id: "business-risk", label: "사업 리스크 콕!", description: "사업계획의 법령·청렴 리스크 검토" },
+  { id: "integrity", label: "청렴 신호등", description: "내 행동이 기준에 맞는지 점검" },
+  { id: "business-risk", label: "사업리스크 신호등", description: "사업계획의 법령·청렴 리스크 검토" },
 ] as const;
 
 type TabId = (typeof TABS)[number]["id"];

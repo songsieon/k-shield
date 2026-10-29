@@ -12,16 +12,24 @@
   --notice: #fff7e0;
   --notice-foreground: #6b4e00;
 
-  /* 청렴 콕! 결과 4단계 */
+  /* 청렴 신호등 결과 4단계 */
   --verdict-ok: #1d7a46;
   --verdict-caution: #b7791f;
   --verdict-danger: #c53030;
   --verdict-check: #4a5568;
 
-  /* 사업 리스크 위험 수준 */
+  /* 사업리스크 신호등 위험 수준 */
   --risk-high: #c53030;
   --risk-mid: #b7791f;
   --risk-low: #1d7a46;
+
+  /* 신호등 3색: 배경색과 그 위에 올릴 글자색 (노랑은 어두운 글자) */
+  --signal-green: #1d7a46;
+  --signal-green-fg: #ffffff;
+  --signal-yellow: #f5c518;
+  --signal-yellow-fg: #1a1a1a;
+  --signal-red: #c53030;
+  --signal-red-fg: #ffffff;
 }
 
 @theme inline {
@@ -41,6 +49,12 @@
   --color-risk-high: var(--risk-high);
   --color-risk-mid: var(--risk-mid);
   --color-risk-low: var(--risk-low);
+  --color-signal-green: var(--signal-green);
+  --color-signal-green-fg: var(--signal-green-fg);
+  --color-signal-yellow: var(--signal-yellow);
+  --color-signal-yellow-fg: var(--signal-yellow-fg);
+  --color-signal-red: var(--signal-red);
+  --color-signal-red-fg: var(--signal-red-fg);
   --font-sans: var(--font-geist-sans), "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   --font-mono: var(--font-geist-mono);
 }
@@ -63,6 +77,10 @@
     --risk-high: #fc8181;
     --risk-mid: #ecc94b;
     --risk-low: #48bb78;
+    --signal-green: #48bb78;
+    --signal-green-fg: #0f1115;
+    --signal-red: #fc8181;
+    --signal-red-fg: #0f1115;
   }
 }
 
@@ -84,6 +102,13 @@
   li {
     break-inside: avoid;
   }
+}
+
+/* 신호등 색은 인쇄(PDF 저장)할 때도 그대로 나오게 한다 */
+.signal-lamp,
+.signal-badge {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
 }
 
 body {
