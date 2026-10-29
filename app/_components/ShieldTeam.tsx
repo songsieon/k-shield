@@ -6,7 +6,7 @@ const HAND = "absolute z-30 h-3 w-4 rounded-full shadow-[0_1px_2px_rgba(0,0,0,0.
 
 export default function ShieldTeam() {
   return (
-    <div className="relative h-48 w-48 shrink-0 print:hidden sm:h-72 sm:w-80" aria-hidden="true">
+    <div className="relative h-40 w-40 shrink-0 print:hidden sm:h-56 sm:w-64" aria-hidden="true">
       <span className="absolute inset-x-6 bottom-0 top-6 rounded-full bg-white/15 blur-xl" />
       <Mascot name="bunny" size={144} className="absolute left-1/2 top-0 z-10 h-[70%] w-[70%] -translate-x-1/2 object-contain drop-shadow-lg" />
       <Mascot name="dog" size={112} className="absolute bottom-[6%] left-0 z-10 h-[44%] w-[38%] object-contain drop-shadow-lg" />
