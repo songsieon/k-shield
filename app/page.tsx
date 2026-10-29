@@ -2,7 +2,7 @@ import { getAllDocuments } from "@/lib/documents";
 
 import BusinessRiskCheck from "./_components/BusinessRiskCheck";
 import IntegrityCheck from "./_components/IntegrityCheck";
-import Mascot from "./_components/Mascot";
+import ShieldTeam from "./_components/ShieldTeam";
 import MainTabs from "./_components/MainTabs";
 import NoticeBar from "./_components/NoticeBar";
 
@@ -22,14 +22,9 @@ export default function Home() {
       <header className="hero-card relative flex flex-col gap-3 overflow-hidden rounded-3xl p-5 pb-6 text-white shadow-lg sm:p-7 sm:pb-8">
         <div className="flex items-center gap-3 sm:gap-6">
           <div className="flex min-w-0 flex-1 flex-col justify-center">
-            <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">K-SHIELD</h1>
+            <h1 className="whitespace-nowrap text-3xl font-extrabold tracking-tight sm:text-4xl">K-SHIELD</h1>
           </div>
-          <div className="relative flex shrink-0 items-end -space-x-5 pr-1 print:hidden sm:-space-x-7" aria-hidden="true">
-            <span className="absolute inset-x-2 bottom-0 top-3 rounded-full bg-white/15 blur-xl" />
-            <Mascot name="dog" size={96} className="mascot-bob relative -rotate-6 h-14 w-14 drop-shadow-lg sm:h-24 sm:w-24" />
-            <Mascot name="bunny" size={112} className="mascot-bob mascot-delay-1 relative z-10 h-[4.5rem] w-[4.5rem] drop-shadow-lg sm:h-32 sm:w-32" />
-            <Mascot name="green" size={96} className="mascot-bob mascot-delay-2 relative rotate-6 h-14 w-14 drop-shadow-lg sm:h-24 sm:w-24" />
-          </div>
+          <ShieldTeam />
         </div>
         <p className="whitespace-nowrap text-[clamp(0.6rem,2.9vw,1rem)] font-semibold tracking-wide text-white">
           <b className="text-hero-key">K</b>AMCO <b className="text-hero-key">S</b>mart <b className="text-hero-key">H</b>elp for <b className="text-hero-key">I</b>ntegrity, <b className="text-hero-key">E</b>thics, <b className="text-hero-key">L</b>aw &amp; <b className="text-hero-key">D</b>ecisions
