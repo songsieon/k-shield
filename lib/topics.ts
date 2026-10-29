@@ -139,7 +139,7 @@ export const EXPERT_SCOPES: ExpertScope[] = [
   {
     role: "법률",
     docIds: ["law-kamco", "law-kamco-decree", "law-state-property", "law-state-property-decree", "law-public-property", "law-tax-collection", "law-public-institutions", "law-credit-info", "law-whistleblower", "ref-kamco-business"],
-    refs: [["law-kamco", "제26조"], ["law-state-property", "제3조"], ["law-state-property", "제20조"], ["law-public-institutions", "제15조"]],
+    refs: [["law-state-property", "제3조"], ["law-state-property", "제20조"], ["law-public-institutions", "제15조"]],
   },
   {
     role: "청렴·윤리",
