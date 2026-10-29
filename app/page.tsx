@@ -20,8 +20,11 @@ export default function Home() {
     <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-5 px-4 py-8">
       <header className="flex flex-col gap-1">
         <h1 className="text-2xl font-bold">K-SHIELD</h1>
-        <p className="text-xs font-medium tracking-wide text-muted">KAMCO Smart Help for Integrity, Ethics, Law &amp; Decisions</p>
-        <p className="text-muted">청렴·윤리 리스크를 법령·내규 근거로 미리 점검하세요</p>
+        <p className="text-sm font-medium tracking-wide text-muted">
+          <b className="text-accent">K</b>AMCO <b className="text-accent">S</b>mart <b className="text-accent">H</b>elp for <b className="text-accent">I</b>ntegrity,{" "}
+          <b className="text-accent">E</b>thics, <b className="text-accent">L</b>aw &amp; <b className="text-accent">D</b>ecisions
+        </p>
+        <p className="text-muted">부패방지 법령·내규 준수 여부와 사업 수행의 법령 위반 및 윤리적 리스크를 간편하게, 미리 점검하세요.</p>
       </header>
 
       <NoticeBar />

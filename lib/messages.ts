@@ -10,7 +10,7 @@ export const MESSAGES = {
   privacyNotice: "개인정보를 입력하지 마세요. 상대방은 'A업체 담당자'처럼 적어 주세요",
   businessPrivacyNotice: "개인정보와 대외비 내용은 빼고 입력해 주세요",
   externalAiNotice: "입력한 내용은 답변을 만들기 위해 외부 AI 서비스로 전송됩니다",
-  referenceOnly: "결과는 사전 점검용 참고이며, 공식 판단은 담당 부서가 합니다",
+  referenceOnly: "결과는 사전 점검을 위한 참고용으로만 활용하여 주시기 바랍니다.",
   emptyInput: "내용을 입력해 주세요",
   tooLongInput: "입력이 너무 깁니다. 5,000자 이내로 줄여 주세요",
 } as const;
