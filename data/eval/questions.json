@@ -1,133 +1,393 @@
 {
-  "version": "1.0 (작성자 확정 2026-10-28)",
+  "version": "1.1",
   "note": "expected는 정답 조항 목록이다. 답변 근거에 이 중 하나라도 들어 있으면 정답으로 친다. 형식은 '문서 id#조문 번호 앞부분'(예: law-cheongtak#제8조). expectedVerdict에 '문제없음'이 없는 문항에서 앱이 '문제없음'이라고 하면 위험한 오판으로 센다. answers는 앱이 추가 질문을 하면 순서대로 보낼 답이고, 다 쓰면 '잘 모르겠어요'로 답한다.",
   "decisions": [
     "I07: 계약 결재선에 있는 팀장은 이해충돌방지법 제12조의 '해당 계약업무를 사실상 담당하는 소속 공직자'로 본다 (예상 단계: 위반 소지 높음·위반 가능성 있음).",
     "I14: 목격자인 직원에게는 신고 의무·신고 조문(부패방지권익위법 제55조·제56조, 청탁금지법 제13조 등)만 정답으로 본다. 수수 금지 조문(청탁금지법 제8조)은 정답이 아니다.",
     "결과 단계도 채점한다: 위험한 오판(예상이 '위반' 쪽인데 '문제없음')은 0건이어야 한다.",
     "질문을 10개까지 소진하는 것은 앱의 질문 규칙 문제로 보고 앱을 고친다 (테스트 답을 늘리지 않는다).",
-    "I06: 친구는 이해충돌방지법 제2조제6호의 사적이해관계자가 아니므로 '문제없음'도 정답으로 인정한다. 정의 조항(이해충돌방지법 제2조)과 행동강령 제17조(특혜의 배제)도 정답 조항에 넣는다."
+    "I06: 친구는 이해충돌방지법 제2조제6호의 사적이해관계자가 아니므로 '문제없음'도 정답으로 인정한다. 정의 조항(이해충돌방지법 제2조)과 행동강령 제17조(특혜의 배제)도 정답 조항에 넣는다.",
+    "1.1 (2026-10-29): I16~I21 추가 — 외부강의등(청탁금지법 제10조)·직무 관련 외부활동(이해충돌방지법 제10조)·금품 수수 예외(제8조제3항 1호·7호) 시나리오. 위험한 오판 채점은 '문제없음'을 허용하지 않는 I16·I17·I18·I20에 적용된다.",
+    "1.1 (2026-10-29): I16~I21 추가 — 외부강의등(청탁금지법 제10조), 직무 관련 외부활동(이해충돌방지법 제10조), 금품 수수 예외(제8조제3항 제1호·제7호) 시나리오. 위험한 오판은 \"문제없음\"을 허용하지 않는 I16·I17·I18·I20에서 센다."
   ],
   "integrity": [
     {
       "id": "I01",
       "title": "계약업체가 보낸 3만원 모바일 상품권",
       "situation": "제가 담당하는 용역 계약의 상대 업체 담당자가 카카오톡으로 3만원짜리 커피 모바일 상품권을 보냈어요. 아직 쓰지 않았고, 따로 부탁받은 일은 없어요.",
-      "answers": ["받은 사람은 저 본인이고, 이번이 처음이에요.", "명절 같은 특별한 때가 아니라 그냥 평일에 보냈어요."],
-      "expected": ["law-cheongtak#제8조", "rule-code-of-conduct#제27조"],
-      "expectedVerdict": ["위반 가능성 있음", "위반 소지 높음", "확인 필요"]
+      "answers": [
+        "받은 사람은 저 본인이고, 이번이 처음이에요.",
+        "명절 같은 특별한 때가 아니라 그냥 평일에 보냈어요."
+      ],
+      "expected": [
+        "law-cheongtak#제8조",
+        "rule-code-of-conduct#제27조"
+      ],
+      "expectedVerdict": [
+        "위반 가능성 있음",
+        "위반 소지 높음",
+        "확인 필요"
+      ]
     },
     {
       "id": "I02",
       "title": "직무와 무관한 대학 동창의 생일 선물",
       "situation": "캠코와 아무 관계가 없는 회사에 다니는 대학 동창이 제 생일 선물로 10만원 정도 되는 화장품을 줬어요. 업무와는 전혀 상관없는 친구예요.",
-      "answers": ["올해 이 친구에게 받은 건 이번이 처음이에요.", "받은 사람은 저 본인이에요."],
-      "expected": ["law-cheongtak#제8조"],
-      "expectedVerdict": ["문제없음", "확인 필요"]
+      "answers": [
+        "올해 이 친구에게 받은 건 이번이 처음이에요.",
+        "받은 사람은 저 본인이에요."
+      ],
+      "expected": [
+        "law-cheongtak#제8조"
+      ],
+      "expectedVerdict": [
+        "문제없음",
+        "확인 필요"
+      ]
     },
     {
       "id": "I03",
       "title": "계약 상대 업체의 결혼 축의금 10만원",
       "situation": "제 결혼식에 제가 관리하는 계약의 상대 업체 대표가 축의금 10만원을 냈어요. 화환은 따로 받지 않았어요.",
-      "answers": ["계약은 지금도 진행 중이고 제가 감독 업무를 맡고 있어요.", "받은 사람은 저 본인이에요."],
-      "expected": ["law-cheongtak-decree#[별표 1]", "law-cheongtak#제8조", "rule-code-of-conduct#[별표 1]"],
-      "expectedVerdict": ["위반 가능성 있음", "위반 소지 높음"]
+      "answers": [
+        "계약은 지금도 진행 중이고 제가 감독 업무를 맡고 있어요.",
+        "받은 사람은 저 본인이에요."
+      ],
+      "expected": [
+        "law-cheongtak-decree#[별표 1]",
+        "law-cheongtak#제8조",
+        "rule-code-of-conduct#[별표 1]"
+      ],
+      "expectedVerdict": [
+        "위반 가능성 있음",
+        "위반 소지 높음"
+      ]
     },
     {
       "id": "I04",
       "title": "대학 외부강의 2시간 80만원",
       "situation": "캠코와 업무 관계가 없는 대학에서 부실채권 정리 경험을 주제로 2시간 강의를 해 달라고 요청받았고 강의료로 80만원을 준다고 합니다. 국가나 지자체가 요청한 것은 아닙니다.",
-      "answers": ["아직 강의 전이고 강의료도 받지 않았어요."],
-      "expected": ["law-cheongtak#제10조", "law-cheongtak-decree#[별표 2]", "law-cheongtak-decree#제25조", "rule-code-of-conduct#제35조의2", "rule-code-of-conduct#[별표 2]"],
-      "expectedVerdict": ["위반 가능성 있음", "위반 소지 높음"]
+      "answers": [
+        "아직 강의 전이고 강의료도 받지 않았어요."
+      ],
+      "expected": [
+        "law-cheongtak#제10조",
+        "law-cheongtak-decree#[별표 2]",
+        "law-cheongtak-decree#제25조",
+        "rule-code-of-conduct#제35조의2",
+        "rule-code-of-conduct#[별표 2]"
+      ],
+      "expectedVerdict": [
+        "위반 가능성 있음",
+        "위반 소지 높음"
+      ]
     },
     {
       "id": "I05",
       "title": "협회 세미나 발표 후 신고 기한",
       "situation": "민간 협회 세미나에서 1시간 발표를 하고 사례금 30만원을 받기로 했어요. 언제까지 무엇을 신고해야 하나요?",
-      "answers": ["협회는 국가나 지방자치단체가 아니에요.", "발표 주제는 제 업무인 국유재산 관리예요."],
-      "expected": ["law-cheongtak#제10조", "rule-code-of-conduct#제35조의2", "law-cheongtak-decree#제26조"],
-      "expectedVerdict": ["문제없음", "위반 가능성 있음", "확인 필요"]
+      "answers": [
+        "협회는 국가나 지방자치단체가 아니에요.",
+        "발표 주제는 제 업무인 국유재산 관리예요."
+      ],
+      "expected": [
+        "law-cheongtak#제10조",
+        "rule-code-of-conduct#제35조의2",
+        "law-cheongtak-decree#제26조"
+      ],
+      "expectedVerdict": [
+        "문제없음",
+        "위반 가능성 있음",
+        "확인 필요"
+      ]
     },
     {
       "id": "I06",
       "title": "내가 심사하는 채무조정 신청인이 고등학교 친구",
       "situation": "제가 심사를 맡은 채무조정 신청 건의 신청인이 고등학교 때 친한 친구라는 걸 오늘 알게 됐어요.",
-      "answers": ["지금도 1년에 몇 번 만나는 사이예요.", "심사 결과는 제가 직접 정하는 업무예요."],
-      "expected": ["law-conflict#제5조", "rule-conflict-of-interest#제3조", "law-conflict-decree#제3조", "law-conflict#제2조", "rule-code-of-conduct#제17조"],
-      "expectedVerdict": ["위반 가능성 있음", "확인 필요", "위반 소지 높음", "문제없음"]
+      "answers": [
+        "지금도 1년에 몇 번 만나는 사이예요.",
+        "심사 결과는 제가 직접 정하는 업무예요."
+      ],
+      "expected": [
+        "law-conflict#제5조",
+        "rule-conflict-of-interest#제3조",
+        "law-conflict-decree#제3조",
+        "law-conflict#제2조",
+        "rule-code-of-conduct#제17조"
+      ],
+      "expectedVerdict": [
+        "위반 가능성 있음",
+        "확인 필요",
+        "위반 소지 높음",
+        "문제없음"
+      ]
     },
     {
       "id": "I07",
       "title": "배우자가 대표인 업체와 우리 부서의 수의계약",
       "situation": "제 배우자가 대표로 있는 인테리어 업체가 우리 부서의 사무실 보수 공사를 수의계약으로 맡게 될 것 같아요. 저는 그 계약의 담당자는 아니에요.",
-      "answers": ["저는 그 부서의 팀장이라 계약 결재선에 있어요."],
-      "expected": ["law-conflict#제12조", "rule-conflict-of-interest#제8조", "law-conflict-decree#제14조"],
-      "expectedVerdict": ["위반 소지 높음", "위반 가능성 있음"]
+      "answers": [
+        "저는 그 부서의 팀장이라 계약 결재선에 있어요."
+      ],
+      "expected": [
+        "law-conflict#제12조",
+        "rule-conflict-of-interest#제8조",
+        "law-conflict-decree#제14조"
+      ],
+      "expectedVerdict": [
+        "위반 소지 높음",
+        "위반 가능성 있음"
+      ]
     },
     {
       "id": "I08",
       "title": "국유재산 개발 부서 직원의 담당 지역 아파트 매수",
       "situation": "저는 국유재산 개발 업무를 하는 부서에 있는데, 제가 맡은 개발 사업지가 있는 구에 아파트를 사려고 해요.",
-      "answers": ["거주용이 아니라 투자 목적이에요.", "아직 계약하지 않았어요."],
-      "expected": ["rule-real-estate#제3조", "law-conflict#제14조", "law-conflict#제6조", "rule-code-of-conduct#제25조", "rule-conflict-of-interest#제4조"],
-      "expectedVerdict": ["위반 가능성 있음", "위반 소지 높음"]
+      "answers": [
+        "거주용이 아니라 투자 목적이에요.",
+        "아직 계약하지 않았어요."
+      ],
+      "expected": [
+        "rule-real-estate#제3조",
+        "law-conflict#제14조",
+        "law-conflict#제6조",
+        "rule-code-of-conduct#제25조",
+        "rule-conflict-of-interest#제4조"
+      ],
+      "expectedVerdict": [
+        "위반 가능성 있음",
+        "위반 소지 높음"
+      ]
     },
     {
       "id": "I09",
       "title": "온비드 공매 아파트 개인 입찰",
       "situation": "캠코가 진행하는 압류재산 공매에 괜찮은 아파트가 나와서 온비드로 개인적으로 입찰해 보려고 해요. 저는 공매 업무 담당은 아니에요.",
-      "answers": ["저는 가계지원 부서에서 일해요."],
-      "expected": ["rule-code-of-conduct#제25조", "law-tax-collection#제80조", "rule-real-estate#제7조"],
-      "expectedVerdict": ["위반 가능성 있음", "위반 소지 높음"]
+      "answers": [
+        "저는 가계지원 부서에서 일해요."
+      ],
+      "expected": [
+        "rule-code-of-conduct#제25조",
+        "law-tax-collection#제80조",
+        "rule-real-estate#제7조"
+      ],
+      "expectedVerdict": [
+        "위반 가능성 있음",
+        "위반 소지 높음"
+      ]
     },
     {
       "id": "I10",
       "title": "구조조정 지원 기업의 미공개 정보로 주식 매수",
       "situation": "업무 중에 우리 공사가 곧 지원할 예정인 회생기업 정보를 알게 됐는데, 발표 전에 그 회사 주식을 사 두면 어떨까 싶어요.",
-      "answers": ["아직 외부에 발표되지 않은 정보예요."],
-      "expected": ["law-conflict#제14조", "rule-code-of-conduct#제24조", "rule-conflict-of-interest#제10조"],
-      "expectedVerdict": ["위반 소지 높음", "위반 가능성 있음"]
+      "answers": [
+        "아직 외부에 발표되지 않은 정보예요."
+      ],
+      "expected": [
+        "law-conflict#제14조",
+        "rule-code-of-conduct#제24조",
+        "rule-conflict-of-interest#제10조"
+      ],
+      "expectedVerdict": [
+        "위반 소지 높음",
+        "위반 가능성 있음"
+      ]
     },
     {
       "id": "I11",
       "title": "퇴직 1년 된 선배와 골프",
       "situation": "1년 전에 퇴직한 캠코 선배가 지금은 저와 업무로 만나는 업체의 임원인데, 이번 주말에 골프를 치자고 해요.",
-      "answers": ["그 업체는 제가 담당하는 용역 계약의 상대방이에요.", "골프 비용은 각자 낼 생각이에요."],
-      "expected": ["law-conflict#제15조", "rule-conflict-of-interest#제9조", "law-conflict-decree#제15조"],
-      "expectedVerdict": ["위반 가능성 있음", "확인 필요"]
+      "answers": [
+        "그 업체는 제가 담당하는 용역 계약의 상대방이에요.",
+        "골프 비용은 각자 낼 생각이에요."
+      ],
+      "expected": [
+        "law-conflict#제15조",
+        "rule-conflict-of-interest#제9조",
+        "law-conflict-decree#제15조"
+      ],
+      "expectedVerdict": [
+        "위반 가능성 있음",
+        "확인 필요"
+      ]
     },
     {
       "id": "I12",
       "title": "채무자의 감면 청탁을 두 번째 받음",
       "situation": "제가 관리하는 채권의 채무자가 지인을 통해 채무를 규정보다 더 깎아 달라고 부탁해 왔어요. 지난주에 거절했는데 또 같은 부탁을 받았어요.",
-      "answers": ["규정에 맞지 않는 감면이에요."],
-      "expected": ["law-cheongtak#제7조", "law-cheongtak#제5조", "rule-solicitation-report#제3조"],
-      "expectedVerdict": ["위반 가능성 있음", "위반 소지 높음", "확인 필요"]
+      "answers": [
+        "규정에 맞지 않는 감면이에요."
+      ],
+      "expected": [
+        "law-cheongtak#제7조",
+        "law-cheongtak#제5조",
+        "rule-solicitation-report#제3조"
+      ],
+      "expectedVerdict": [
+        "위반 가능성 있음",
+        "위반 소지 높음",
+        "확인 필요"
+      ]
     },
     {
       "id": "I13",
       "title": "직무 관련 업체의 유료 자문위원 위촉",
       "situation": "제가 담당하는 계약의 상대 업체가 저를 자문위원으로 위촉하고 매달 자문료를 주겠다고 해요.",
-      "answers": ["제가 그 업체의 계약 이행을 감독하고 있어요."],
-      "expected": ["law-conflict#제10조", "rule-conflict-of-interest#제6조"],
-      "expectedVerdict": ["위반 소지 높음", "위반 가능성 있음"]
+      "answers": [
+        "제가 그 업체의 계약 이행을 감독하고 있어요."
+      ],
+      "expected": [
+        "law-conflict#제10조",
+        "rule-conflict-of-interest#제6조"
+      ],
+      "expectedVerdict": [
+        "위반 소지 높음",
+        "위반 가능성 있음"
+      ]
     },
     {
       "id": "I14",
       "title": "동료가 업체에게서 돈 받는 것을 목격",
       "situation": "같은 팀 동료가 입찰 참가 업체 직원에게서 현금 봉투를 받는 것을 봤어요. 어떻게 해야 하나요?",
-      "answers": ["어제 회사 근처에서 봤어요."],
-      "expected": ["law-anticorruption#제56조", "law-anticorruption#제55조", "law-cheongtak#제13조", "rule-code-of-conduct#제46조", "rule-corruption-report#제3조"],
-      "expectedVerdict": ["위반 소지 높음", "위반 가능성 있음", "확인 필요"]
+      "answers": [
+        "어제 회사 근처에서 봤어요."
+      ],
+      "expected": [
+        "law-anticorruption#제56조",
+        "law-anticorruption#제55조",
+        "law-cheongtak#제13조",
+        "rule-code-of-conduct#제46조",
+        "rule-corruption-report#제3조"
+      ],
+      "expectedVerdict": [
+        "위반 소지 높음",
+        "위반 가능성 있음",
+        "확인 필요"
+      ]
     },
     {
       "id": "I15",
       "title": "업무 상대 업체 대표에게 개인적으로 돈을 빌림",
       "situation": "제가 담당하는 용역 계약의 상대 업체 대표에게 개인적으로 500만원을 빌리려고 해요.",
-      "answers": ["금융회사가 아니라 대표 개인에게 빌리는 거예요.", "아직 빌리지 않았어요."],
-      "expected": ["law-conflict#제9조", "rule-conflict-of-interest#제5조", "law-conflict-decree#제12조"],
-      "expectedVerdict": ["위반 가능성 있음", "위반 소지 높음"]
+      "answers": [
+        "금융회사가 아니라 대표 개인에게 빌리는 거예요.",
+        "아직 빌리지 않았어요."
+      ],
+      "expected": [
+        "law-conflict#제9조",
+        "rule-conflict-of-interest#제5조",
+        "law-conflict-decree#제12조"
+      ],
+      "expectedVerdict": [
+        "위반 가능성 있음",
+        "위반 소지 높음"
+      ]
+    },
+    {
+      "id": "I16",
+      "title": "대학 특강 사례금 80만원 (외부강의등 상한 초과)",
+      "situation": "공매 제도를 주제로 한 대학 특강(2시간)을 요청받아 했고, 강의료로 80만원을 받았어요. 요청한 곳은 캠코와 계약 관계가 없는 대학교예요.",
+      "answers": [
+        "이번 달 외부강의는 이 한 번뿐이에요.",
+        "아직 신고는 하지 않았어요."
+      ],
+      "expected": [
+        "law-cheongtak#제10조",
+        "law-cheongtak-decree#제25조"
+      ],
+      "expectedVerdict": [
+        "위반 가능성 있음",
+        "위반 소지 높음",
+        "확인 필요"
+      ]
+    },
+    {
+      "id": "I17",
+      "title": "계약업체에 사적으로 자문하고 월 100만원 (이해충돌 제10조 1호)",
+      "situation": "캠코와 용역 계약을 맺고 있는 업체 대표가 개인적으로 부탁해서, 퇴근 후에 그 회사 경영 자문을 해 주고 매달 100만원을 받으려고 해요. 강의가 아니라 자문이에요.",
+      "answers": [
+        "저는 그 계약의 검수를 맡고 있지 않아요.",
+        "사장 허가는 받지 않았어요."
+      ],
+      "expected": [
+        "law-conflict#제10조"
+      ],
+      "expectedVerdict": [
+        "위반 가능성 있음",
+        "위반 소지 높음",
+        "확인 필요"
+      ]
+    },
+    {
+      "id": "I18",
+      "title": "직무 관련 협회 이사 취임 (이해충돌 제10조 5호, 허가 필요)",
+      "situation": "제 담당 업무(채권 매각)와 관련 있는 민간 협회에서 비상임 이사로 와 달라고 해요. 보수는 없어요.",
+      "answers": [
+        "사장 허가는 아직 받지 않았어요.",
+        "협회는 캠코의 거래 상대방이에요."
+      ],
+      "expected": [
+        "law-conflict#제10조",
+        "rule-conflict-of-interest#제6조"
+      ],
+      "expectedVerdict": [
+        "위반 가능성 있음",
+        "위반 소지 높음",
+        "확인 필요"
+      ]
+    },
+    {
+      "id": "I19",
+      "title": "팀장이 팀원에게 격려 상품권 (제8조제3항제1호)",
+      "situation": "우리 팀장님이 프로젝트를 마친 팀원인 저에게 격려 차원에서 개인 돈으로 30만원짜리 상품권을 주셨어요. 팀장님은 제 직속 상급자예요.",
+      "answers": [
+        "인사평가를 부탁한 적은 없어요.",
+        "팀장님과 저는 같은 부서에서 일하는 사이예요."
+      ],
+      "expected": [
+        "law-cheongtak#제8조",
+        "rule-code-of-conduct#제27조"
+      ],
+      "expectedVerdict": [
+        "문제없음",
+        "확인 필요"
+      ]
+    },
+    {
+      "id": "I20",
+      "title": "계약업체의 포상 명목 상품권 20만원 (예외 아님)",
+      "situation": "캠코와 용역 계약 중인 업체가 우리 부서 우수 직원이라며 저에게 감사 포상 명목으로 상품권 20만원을 보내왔어요. 저는 그 계약의 검수를 담당해요.",
+      "answers": [
+        "받은 사람은 저 본인이에요.",
+        "아직 돌려주거나 신고하지 않았어요."
+      ],
+      "expected": [
+        "law-cheongtak#제8조",
+        "rule-code-of-conduct#제27조"
+      ],
+      "expectedVerdict": [
+        "위반 가능성 있음",
+        "위반 소지 높음",
+        "확인 필요"
+      ]
+    },
+    {
+      "id": "I21",
+      "title": "학회 공모전 입상 상금 200만원 (제8조제3항제7호)",
+      "situation": "한국반부패학회가 연 청렴 우수사례 공모전에 개인 자격으로 응모해 입상했고, 상금 200만원을 받게 됐어요. 이 학회는 캠코와 계약이나 거래 관계가 없어요.",
+      "answers": [
+        "공모전은 누구나 응모할 수 있는 공개 공모전이에요.",
+        "업무시간이나 회사 자료를 쓰지 않았어요."
+      ],
+      "expected": [
+        "law-cheongtak#제8조",
+        "rule-code-of-conduct#제27조"
+      ],
+      "expectedVerdict": [
+        "문제없음",
+        "확인 필요"
+      ]
     }
   ],
   "businessRisk": [
@@ -136,35 +396,59 @@
       "title": "온비드 SNS 홍보 용역 수의계약 + 이벤트 개인정보 수집",
       "plan": "온비드 이용을 늘리기 위해 외부 홍보대행사에 SNS 홍보 용역을 맡기려 합니다. 대상은 일반 국민이고, 이벤트 참여자에게 경품을 주기 위해 이름과 휴대전화 번호를 받을 계획입니다. 예산은 약 8천만원이고, 작년에 일을 맡겼던 업체와 수의계약을 하려고 합니다.",
       "answers": [],
-      "expected": ["law-public-contract-rule#제8조", "law-privacy#제15조", "law-privacy#제26조", "law-public-contract-rule#제6조"]
+      "expected": [
+        "law-public-contract-rule#제8조",
+        "law-privacy#제15조",
+        "law-privacy#제26조",
+        "law-public-contract-rule#제6조"
+      ]
     },
     {
       "id": "B02",
       "title": "업무용 부동산을 상인회 추천 업체에 수의계약 임대",
       "plan": "캠코 보유 업무용 부동산 1층을 지역 소상공인에게 저렴하게 임대하는 상생 사업을 추진하려 합니다. 대상은 지역 소상공인 5곳, 예산은 리모델링비 3천만원이고, 공개 모집 없이 지역 상인회가 추천한 업체와 수의계약을 할 예정입니다.",
       "answers": [],
-      "expected": ["law-public-contract-rule#제8조", "law-public-contract-rule#제6조", "law-conflict#제12조", "rule-code-of-conduct#제17조"]
+      "expected": [
+        "law-public-contract-rule#제8조",
+        "law-public-contract-rule#제6조",
+        "law-conflict#제12조",
+        "rule-code-of-conduct#제17조"
+      ]
     },
     {
       "id": "B03",
       "title": "국유 일반재산을 특정 기업에 수의계약 매각",
       "plan": "위탁받아 관리 중인 국유 일반재산 토지를 지역 일자리 창출을 위해 공장 부지가 필요한 특정 중견기업에 수의계약으로 매각하려 합니다. 대상은 해당 기업 1곳, 매각 예정가는 약 50억원이며 감정평가는 아직 하지 않았습니다.",
       "answers": [],
-      "expected": ["law-state-property#제43조", "law-state-property-decree#제40조", "law-state-property#제44조", "law-state-property-decree#제42조"]
+      "expected": [
+        "law-state-property#제43조",
+        "law-state-property-decree#제40조",
+        "law-state-property#제44조",
+        "law-state-property-decree#제42조"
+      ]
     },
     {
       "id": "B04",
       "title": "채권추심 위탁사 선정과 채무자 정보 제공",
       "plan": "가계 부실채권의 회수를 늘리기 위해 신용정보회사(CA사) 3곳에 채권추심 업무를 위탁하려 합니다. 대상은 연체 채무자 약 2만 명이고, 위탁사에 채무자 이름·연락처·채무 정보를 넘길 예정입니다. 예산은 회수금의 일정 비율 수수료이며, 위탁사는 제한경쟁으로 선정합니다.",
       "answers": [],
-      "expected": ["law-credit-info#제17조", "law-credit-info#제27조의2", "law-credit-info#제27조", "law-privacy#제26조"]
+      "expected": [
+        "law-credit-info#제17조",
+        "law-credit-info#제27조의2",
+        "law-credit-info#제27조",
+        "law-privacy#제26조"
+      ]
     },
     {
       "id": "B05",
       "title": "사옥 리모델링 공사를 나눠 수의계약",
       "plan": "본사 사옥 리모델링 공사(총 2억원)를 빨리 진행하기 위해 층별로 4건으로 나눠 각각 5천만원씩 수의계약으로 발주하려 합니다. 목적은 업무 공간 개선이고 대상은 본사 3~6층입니다.",
       "answers": [],
-      "expected": ["law-state-contract-decree#제68조", "law-public-contract-rule#제8조", "law-state-contract-decree#제26조"]
+      "expected": [
+        "law-state-contract-decree#제68조",
+        "law-public-contract-rule#제8조",
+        "law-state-contract-decree#제26조"
+      ]
     }
   ]
 }
