@@ -9,6 +9,7 @@
   --border: #e2e5ea;
   --accent: #1f5fbf;
   --accent-foreground: #ffffff;
+  --hero-tint: #e8f1fd;
   --notice: #fff7e0;
   --notice-foreground: #6b4e00;
 
@@ -68,6 +69,7 @@
     --border: #2b3039;
     --accent: #6ea2f0;
     --accent-foreground: #0f1115;
+    --hero-tint: #1b2535;
     --notice: #3a3115;
     --notice-foreground: #f3dc9a;
     --verdict-ok: #48bb78;
@@ -92,7 +94,8 @@
     --card: #ffffff;
     --muted: #5f6673;
     --border: #d5d9df;
-    --notice: #ffffff;
+    --hero-tint: #ffffff;
+  --notice: #ffffff;
     --notice-foreground: #6b4e00;
   }
   @page {
@@ -116,4 +119,24 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans);
   word-break: keep-all;
+}
+
+/* 마스코트로 꾸미기: 머리 카드 배경과 살짝 떠오르는 움직임 */
+.hero-card {
+  background: linear-gradient(135deg, var(--card) 0%, var(--hero-tint) 100%);
+}
+
+@keyframes mascot-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.mascot-bob {
+  animation: mascot-bob 2.6s ease-in-out infinite;
+}
+.mascot-delay-1 { animation-delay: 0.4s; }
+.mascot-delay-2 { animation-delay: 0.8s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mascot-bob { animation: none; }
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import Mascot from "./Mascot";
 
 import { ACCEPTED_FILE_TYPES, extractFileText, FileTextError } from "@/lib/fileText";
 import { addHistory, type HistoryEntry } from "@/lib/history";
@@ -224,7 +225,8 @@ export default function BusinessRiskCheck() {
       )}
 
       {loading && (
-        <p role="status" className="text-center text-sm text-muted">
+        <p role="status" className="flex flex-col items-center gap-1 text-center text-sm text-muted">
+          <Mascot name="green" size={72} className="mascot-bob h-16 w-16" />
           {MESSAGES.waiting} <span className="block text-xs">전문가 4명이 함께 검토하고 있어요</span>
         </p>
       )}
