@@ -24,8 +24,11 @@ export default function Home() {
       <header className="hero-card relative flex flex-col gap-3 overflow-hidden rounded-3xl p-5 pb-6 text-white shadow-lg sm:p-7 sm:pb-8">
         <div className="flex items-center gap-3 sm:gap-6">
           <div className="flex min-w-0 flex-1 flex-col items-start justify-center gap-3">
-            <Image src="/kamco-logo-white.png" alt="캠코 한국자산관리공사 로고" width={340} height={300} className="h-14 w-auto drop-shadow-md sm:h-20" priority />
-            <h1 className="whitespace-nowrap text-3xl font-extrabold tracking-tight sm:text-4xl">K-SHIELD</h1>
+            <Image src="/kamco-logo-white.png" alt="캠코 한국자산관리공사 로고" width={340} height={300} className="-mt-3 h-14 w-auto drop-shadow-md sm:-mt-4 sm:h-20" priority />
+            <div className="flex flex-col">
+              <span className="text-xs font-semibold tracking-wide text-white/80 sm:text-sm">캠코를 지키는 방패</span>
+              <h1 className="whitespace-nowrap text-[2rem] font-extrabold tracking-tight sm:text-6xl">K-SHIELD</h1>
+            </div>
           </div>
           <ShieldTeam />
         </div>

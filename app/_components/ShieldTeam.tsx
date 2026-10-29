@@ -6,13 +6,13 @@ const HAND = "absolute z-30 h-4 w-4 rounded-full border-2 border-white/90 shadow
 
 export default function ShieldTeam() {
   return (
-    <div className="relative h-40 w-52 shrink-0 print:hidden sm:h-56 sm:w-80" aria-hidden="true">
+    <div className="relative h-44 w-48 shrink-0 print:hidden sm:h-64 sm:w-80" aria-hidden="true">
       <span className="absolute inset-x-6 bottom-0 top-6 rounded-full bg-white/15 blur-xl" />
-      <Mascot name="bunny" size={144} className="absolute left-1/2 top-0 z-10 h-[46%] w-[46%] -translate-x-1/2 object-contain drop-shadow-lg" />
+      <Mascot name="bunny" size={144} className="absolute left-1/2 top-0 z-10 h-[56%] w-[56%] -translate-x-1/2 object-contain drop-shadow-lg" />
       <Mascot name="dog" size={112} className="absolute bottom-[6%] left-0 z-10 h-[44%] w-[38%] object-contain drop-shadow-lg" />
       <Mascot name="green" size={112} className="absolute bottom-[6%] right-0 z-10 h-[44%] w-[38%] object-contain drop-shadow-lg" />
 
-      <svg viewBox="0 0 120 150" preserveAspectRatio="none" className="absolute bottom-0 left-[27%] top-[22%] z-20 h-[78%] w-[46%] drop-shadow-xl">
+      <svg viewBox="0 0 120 150" preserveAspectRatio="none" className="absolute bottom-0 left-[27%] top-[38%] z-20 h-[62%] w-[46%] drop-shadow-xl">
         <defs>
           <linearGradient id="shield-blue" x1="0" y1="0" x2="1" y2="1">
             <stop offset="0" stopColor="#2352c4" />
@@ -26,10 +26,10 @@ export default function ShieldTeam() {
         <path d="M47 62 L56 71 L74 50" fill="none" stroke="#ffffff" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
 
-      <span className={`${HAND} left-[41%] top-[24%] bg-[#fdfdfd]`} />
-      <span className={`${HAND} left-[54%] top-[24%] bg-[#fdfdfd]`} />
-      <span className={`${HAND} left-[24%] top-[52%] bg-[#efdcb8]`} />
-      <span className={`${HAND} right-[24%] top-[52%] bg-[#a6d124]`} />
+      <span className={`${HAND} left-[41%] top-[40%] bg-[#fdfdfd]`} />
+      <span className={`${HAND} left-[54%] top-[40%] bg-[#fdfdfd]`} />
+      <span className={`${HAND} left-[24%] top-[62%] bg-[#efdcb8]`} />
+      <span className={`${HAND} right-[24%] top-[62%] bg-[#a6d124]`} />
     </div>
   );
 }
