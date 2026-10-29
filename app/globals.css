@@ -147,3 +147,43 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .mascot-bob { animation: none; }
 }
+
+/* 점검 중 방패 로딩 (ShieldLoader) */
+@keyframes shield-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.07); }
+}
+@keyframes shield-spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes shield-check {
+  0% { stroke-dashoffset: 80; }
+  55%, 100% { stroke-dashoffset: 0; }
+}
+@keyframes shield-dot {
+  0%, 80%, 100% { opacity: 0.25; transform: scale(0.8); }
+  40% { opacity: 1; transform: scale(1.2); }
+}
+
+.shield-pulse { animation: shield-pulse 1.8s ease-in-out infinite; }
+.shield-ring {
+  background: conic-gradient(from 0deg, transparent 0 55%, var(--brand-red) 100%);
+  mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 3px));
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 3px));
+  animation: shield-spin 1.4s linear infinite;
+}
+.shield-check { stroke-dasharray: 80; animation: shield-check 1.8s ease-in-out infinite; }
+.shield-dots i {
+  display: block;
+  height: 0.4rem;
+  width: 0.4rem;
+  border-radius: 9999px;
+  background: var(--accent);
+  animation: shield-dot 1.2s ease-in-out infinite;
+}
+.shield-dots i:nth-child(2) { animation-delay: 0.2s; }
+.shield-dots i:nth-child(3) { animation-delay: 0.4s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .shield-pulse, .shield-ring, .shield-check, .shield-dots i { animation: none; }
+}

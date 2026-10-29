@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Mascot from "./Mascot";
+import ShieldLoader from "./ShieldLoader";
 
 import { addHistory, type HistoryEntry } from "@/lib/history";
 import { MAX_INPUT_LENGTH, MESSAGES } from "@/lib/messages";
@@ -208,12 +208,7 @@ export default function IntegrityCheck() {
         </section>
       )}
 
-      {loading && (
-        <p role="status" className="flex flex-col items-center gap-1 text-center text-sm text-muted">
-          <Mascot name="green" size={72} className="mascot-bob h-16 w-16" />
-          {MESSAGES.waiting}
-        </p>
-      )}
+      {loading && <ShieldLoader message={MESSAGES.waiting} />}
       {error && (
         <p role="alert" className="rounded-lg border border-verdict-danger px-3 py-2 text-sm text-verdict-danger">
           {error}
